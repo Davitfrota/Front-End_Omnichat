@@ -79,7 +79,8 @@ function* onAddMessage({ message }) {
 
 function* onReceiveMessage({ message }) { 
  try {
-    const response = yield call(receiveMessage, message);
+   const response = yield call(receiveMessage, message);
+   console.log(response)
     yield put(addMessageSuccess(response));
   } catch (error) {
     yield put(addMessageFail(error));
@@ -92,7 +93,7 @@ function* chatSaga() {
   yield takeEvery(GET_CONTACTS, onGetContacts);
   yield takeEvery(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);
-  yield takeEvery(RECEIVE_MESSAGE_REQUEST, receiveMessage);
+  yield takeEvery(RECEIVE_MESSAGE_REQUEST, onReceiveMessage);
 }
 
 export default chatSaga;
