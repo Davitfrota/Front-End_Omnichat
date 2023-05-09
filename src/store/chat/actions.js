@@ -14,6 +14,9 @@ import {
   POST_ADD_MESSAGE,
   POST_ADD_MESSAGE_FAIL,
   POST_ADD_MESSAGE_SUCCESS,
+  RECEIVE_MESSAGE_REQUEST,
+  RECEIVE_MESSAGE_SUCCESS,
+  RECEIVE_MESSAGE_FAIL
 } from "./actionTypes"
 
 export const getChats = () => ({
@@ -87,3 +90,18 @@ export const addMessageFail = error => ({
   type: POST_ADD_MESSAGE_FAIL,
   payload: error,
 })
+
+export const receiveMessageRequest = message => ({
+  type: RECEIVE_MESSAGE_REQUEST,
+  message
+});
+
+export const receiveMessageSuccess = response => ({
+  type: RECEIVE_MESSAGE_SUCCESS,
+  payload: response
+});
+
+export const receiveMessageFail = error => ({
+  type: RECEIVE_MESSAGE_FAIL,
+  payload: error
+});

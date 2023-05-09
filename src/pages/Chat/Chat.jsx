@@ -49,6 +49,7 @@ import {
   getContacts as onGetContacts,
   getGroups as onGetGroups,
   getMessages as onGetMessages,
+  receiveMessageRequest as OnReceiveMessage
 } from "/src/store/actions";
 
 //redux
@@ -68,7 +69,7 @@ const Chat = props => {
     messages: state.chat.messages,
   }));
 
-  const [messageBox, setMessageBox] = useState(null);
+  const [messageBox, setMessageBox] = useState(null)
   // const Chat_Box_Username2 = "Henry Wells"
   const [currentRoomId, setCurrentRoomId] = useState(null);
   // eslint-disable-next-line no-unused-vars
@@ -85,7 +86,7 @@ const Chat = props => {
   // eslint-disable-next-line no-unused-vars
   const [Chat_Box_User_Status, setChat_Box_User_Status] = useState(false);
   const [curMessage, setcurMessage] = useState("");
-
+  const [receivedMessage, setReceivedMessage] = useState('');
   useEffect(() => {
     dispatch(onGetChats());
     dispatch(onGetGroups());
@@ -97,6 +98,7 @@ const Chat = props => {
     if (!isEmpty(messages)) scrollToBottom();
   }, [messages]);
 
+  
   // const toggleNotification = () => {
   //   setnotification_Menu(!notification_Menu)
   // }

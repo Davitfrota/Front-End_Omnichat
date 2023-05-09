@@ -7,6 +7,7 @@ import {
   GET_GROUPS,
   GET_MESSAGES,
   POST_ADD_MESSAGE,
+  RECEIVE_MESSAGE_REQUEST
 } from "./actionTypes";
 import {
   getChatsSuccess,
@@ -28,6 +29,7 @@ import {
   getContacts,
   getMessages,
   addMessage,
+  receiveMessage,
 } from "../../helpers/fakebackend_helper";
 
 function* onGetChats() {
@@ -75,12 +77,22 @@ function* onAddMessage({ message }) {
   }
 }
 
+function* onReceiveMessage({ message }) { 
+ try {
+    const response = yield call(receiveMessage, message);
+    yield put(addMessageSuccess(response));
+  } catch (error) {
+    yield put(addMessageFail(error));
+  }
+}
+
 function* chatSaga() {
   yield takeEvery(GET_CHATS, onGetChats);
   yield takeEvery(GET_GROUPS, onGetGroups);
   yield takeEvery(GET_CONTACTS, onGetContacts);
   yield takeEvery(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);
+  yield takeEvery(RECEIVE_MESSAGE_REQUEST, receiveMessage);
 }
 
 export default chatSaga;

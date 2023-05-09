@@ -49,7 +49,7 @@ export const GET_GROUPS = "/groups"
 export const GET_CONTACTS = "/contacts"
 export const GET_MESSAGES = "/messages"
 export const ADD_MESSAGE = "/add/messages"
-
+export const RECEIVE_MESSAGE =  "/receive/messages"
 //ORDERS
 export const GET_ORDERS = "/orders"
 export const ADD_NEW_ORDER = "/add/order"

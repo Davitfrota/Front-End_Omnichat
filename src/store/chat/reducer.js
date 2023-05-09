@@ -9,6 +9,8 @@ import {
   GET_MESSAGES_FAIL,
   POST_ADD_MESSAGE_SUCCESS,
   POST_ADD_MESSAGE_FAIL,
+  RECEIVE_MESSAGE_SUCCESS,
+  RECEIVE_MESSAGE_FAIL
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -81,6 +83,17 @@ const Calendar = (state = INIT_STATE, action) => {
         error: action.payload,
       }
 
+    case RECEIVE_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        messages: [state.messages, action.payload]
+
+      };
+    case RECEIVE_MESSAGE_FAIL:
+      return {
+        ...state,
+        error: action.payload
+      };
     default:
       return state
   }
