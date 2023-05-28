@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 
-// Formik Validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
@@ -14,16 +13,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 // import images
-import profileImg from "../../assets/images/profile-img.png";
-import logoImg from "../../assets/images/logo.svg";
+import profileImg from "../../assets/images/registro.png";
+import logoImg from "../../assets/images/canguru-jordan.svg"
+import instagram from "../../assets/images/chat/InstagramIcone.png";
+import whatts from "../../assets/images/chat/WhatsappIcone.png";
 
 const Register = props => {
-  document.title = "Register | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Register";
 
   const dispatch = useDispatch();
 
   const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
@@ -65,16 +65,7 @@ const Register = props => {
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
                 <div className="bg-primary bg-soft">
-                  <Row>
-                    <Col className="col-7">
-                      <div className="text-primary p-4">
-                        <p>Consiga sua conta grátis agora!.</p>
-                      </div>
-                    </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profileImg} alt="" className="img-fluid" />
-                    </Col>
-                  </Row>
+                  <img src={profileImg} alt="" className="img-fluid" />
                 </div>
                 <CardBody className="pt-0">
                   <div>
@@ -85,7 +76,7 @@ const Register = props => {
                             src={logoImg}
                             alt=""
                             className="rounded-circle"
-                            height="34"
+                            height="70"
                           />
                         </span>
                       </div>
@@ -131,6 +122,23 @@ const Register = props => {
                       </div>
 
                       <div className="mb-3">
+                        <Label className="form-label">Senha</Label>
+                        <Input
+                          name="password"
+                          type="password"
+                          placeholder="Senha"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.password || ""}
+                          invalid={
+                            validation.touched.password && validation.errors.password ? true : false
+                          }
+                        />
+                        {validation.touched.password && validation.errors.password ? (
+                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
                         <Label className="form-label">Usuário</Label>
                         <Input
                           name="username"
@@ -147,8 +155,51 @@ const Register = props => {
                           <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
                         ) : null}
                       </div>
+                     
+
                       <div className="mb-3">
-                        <Label className="form-label">Senha</Label>
+                        <div>
+                          <Label className="form-label">Whatsapp</Label>
+                          <img className="img-register" src={whatts}/>
+                        </div>
+                        <Input
+                          name="number"
+                          type="text"
+                          placeholder="Número"
+                          onChange={validation.handleChange} 
+                          onBlur={validation.handleBlur}
+                          value={validation.values.username || ""}
+                          invalid={
+                            validation.touched.username && validation.errors.username ? true : false
+                          }
+                        />
+                        {validation.touched.username && validation.errors.username ? (
+                          <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
+                        <Label className="form-label">Instagram</Label>
+                        <img className="img-register" src={instagram}/>
+                        <Input
+                          id="email"
+                          name="email"
+                          className="form-control"
+                          placeholder="Email do instagram"
+                          type="email"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.email || ""}
+                          invalid={
+                            validation.touched.email && validation.errors.email ? true : false
+                          }
+                        />
+                        {validation.touched.email && validation.errors.email ? (
+                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
+                        <Label className="form-label">Senha do Instagram</Label>
+                        <img className="img-register" src={instagram}/>
                         <Input
                           name="password"
                           type="password"
@@ -176,10 +227,6 @@ const Register = props => {
 
                       <div className="mt-4 text-center">
                         <p className="mb-0">
-                          {/* By registering you agree to the Skote{" "}
-                          <Link to="#" className="text-primary">
-                            Terms of Use
-                          </Link> */}
                         </p>
                       </div>
                     </Form>
@@ -195,8 +242,8 @@ const Register = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()}
+                  <i className="mdi mdi-heart text-danger" />
                 </p>
               </div>
             </Col>

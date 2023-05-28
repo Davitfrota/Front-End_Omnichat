@@ -35,13 +35,11 @@ import "react-perfect-scrollbar/dist/css/styles.css";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
+import ProfileMenu from "/src/components/CommonForBoth/TopbarDropdown/ProfileMenu";
+
 import images from "/src/assets/images";
-import IconeUsuario from "/src/assets/images/users/Icone_Usuario.png";
-import TelegramIcone from "/src/assets/images/chat/TelegramIcone.png";
-import MensageIcone from "/src/assets/images/chat/MensageIcone.png";
-import TelegramBackground from "/src/assets/images/chat/TelegramBackground.png";
-import WhatsappIcone from "/src/assets/images/chat/WhatsappIcone.png";
-import InstagramIcone from "/src/assets/images/chat/InstagramIcone.png";
+import instagram from "../../assets/images/chat/InstagramIcone.png";
+import whatts from "../../assets/images/chat/WhatsappIcone.png";
 
 import {
   addMessage as onAddMessage,
@@ -176,32 +174,23 @@ const Chat = props => {
 
   return (
     <React.Fragment>
-      <div className="page-content">
+      <div className="container">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Omnichat" breadcrumbItem= {props.t("Chat")} />
-
-          <Row>
+          <div style={{marginTop:'20px'}}>
+            <Breadcrumbs title="Omnichat" breadcrumbItem= {props.t("Chat")} />
+          </div>
+          <Row >
             <Col lg="12">
-              <div className="d-lg-flex">
+              <div className="d-lg-flex" >
                 <div className="chat-leftsidebar me-lg-4">
                   <div >
                     <div className="py-4 border-bottom">
-                      <div className="d-flex">
-                        <div className="align-self-center me-3">
-                          <img
-                            src={IconeUsuario}
-                            className="avatar-xs rounded-circle"
-                            alt=""
-                          />
-                        </div>
-                        <div className="flex-grow-1">
-                          <h5 className="font-size-15 mt-0 mb-1">
-                            {currentUser.name}
-                          </h5>
+                      <div className="d-flex" style={{justifyContent:"center", alignItems:'center'}}>
+                      <ProfileMenu />
+                        <div className="flex-grow-1" style={{justifyContent:"center", alignItems:'center', }}>
                           <p className="text-muted mb-0">
                             <i className="mdi mdi-circle text-success align-middle me-2" />
-                            {props.t("Active")}
                           </p>
                         </div>
 
@@ -275,153 +264,13 @@ const Chat = props => {
                                           :
                                           <div className="align-self-center me-3">
                                             <img
-                                              src={chat.image}
-                                              className="rounded-circle avatar-xs"
-                                              alt=""
-                                            />
-                                          </div>
-                                        }
-
-                                        <div className="flex-grow-1 overflow-hidden">
-                                          <h5 className="text-truncate font-size-14 mb-1">
-                                            {chat.name}
-                                          </h5>
-                                          <p className="text-truncate mb-0">
-                                            {chat.description}
-                                          </p>
-                                        </div>
-                                        <div className="font-size-11">
-                                          {chat.time}
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </li>
-                                ))}
-                              </PerfectScrollbar>
-                            </ul>
-                          </div>
-                        </TabPane>
-
-                        <TabPane tabId="2">
-                          <div>
-                            <h5 className="font-size-14 mb-3">{props.t("Recent")}</h5>
-                            <ul className="list-unstyled chat-list" id="recent-list">
-                              <PerfectScrollbar style={{ height: "410px" }}>
-                                {map(chats, chat => (
-                                  <li
-                                    key={chat.id + chat.status}
-                                    className={
-                                      currentRoomId === chat.roomId
-                                        ? props.t("Active")
-                                        : ""
-                                    }
-                                  >
-                                    <Link
-                                      to="#"
-                                      onClick={() => {
-                                        userChatOpen(
-                                          chat.id,
-                                          chat.name,
-                                          chat.status,
-                                          chat.roomId
-                                        );
-                                      }}
-                                    >
-                                      <div className="d-flex">
-                                        <div className="align-self-center me-3">
-                                          <i
-                                            className={
-                                              chat.status === props.t("Active")
-                                                ? "mdi mdi-circle text-success font-size-10"
-                                                : chat.status === "intermediate"
-                                                  ? "mdi mdi-circle text-warning font-size-10"
-                                                  : "mdi mdi-circle font-size-10"
-                                            }
-                                          />
-                                        </div>
-                                        {chat.isImg ?
-                                          <div className="avatar-xs align-self-center me-3">
-                                            <span className="avatar-title rounded-circle bg-primary bg-soft text-primary">
-                                              {chat.profile}
-                                            </span>
-                                          </div>
-                                          :
-                                          <div className="align-self-center me-3">
-                                            <img
-                                              src={chat.image}
-                                              className="rounded-circle avatar-xs"
-                                              alt=""
-                                            />
-                                          </div>
-                                        }
-
-                                        <div className="flex-grow-1 overflow-hidden">
-                                          <h5 className="text-truncate font-size-14 mb-1">
-                                            {chat.name}
-                                          </h5>
-                                          <p className="text-truncate mb-0">
-                                            {chat.description}
-                                          </p>
-                                        </div>
-                                        <div className="font-size-11">
-                                          {chat.time}
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </li>
-                                ))}
-                              </PerfectScrollbar>
-                            </ul>
-                          </div>
-                        </TabPane>
-
-                        <TabPane tabId="3">
-                          <div>
-                            <h5 className="font-size-14 mb-3">{props.t("Recent")}</h5>
-                            <ul className="list-unstyled chat-list" id="recent-list">
-                              <PerfectScrollbar style={{ height: "410px" }}>
-                                {map(chats, chat => (
-                                  <li
-                                    key={chat.id + chat.status}
-                                    className={
-                                      currentRoomId === chat.roomId
-                                        ? props.t("Active")
-                                        : ""
-                                    }
-                                  >
-                                    <Link
-                                      to="#"
-                                      onClick={() => {
-                                        userChatOpen(
-                                          chat.id,
-                                          chat.name,
-                                          chat.status,
-                                          chat.roomId
-                                        );
-                                      }}
-                                    >
-                                      <div className="d-flex">
-                                        <div className="align-self-center me-3">
-                                          <i
-                                            className={
-                                              chat.status === props.t("Active")
-                                                ? "mdi mdi-circle text-success font-size-10"
-                                                : chat.status === "intermediate"
-                                                  ? "mdi mdi-circle text-warning font-size-10"
-                                                  : "mdi mdi-circle font-size-10"
-                                            }
-                                          />
-                                        </div>
-                                        {chat.isImg ?
-                                          <div className="avatar-xs align-self-center me-3">
-                                            <span className="avatar-title rounded-circle bg-primary bg-soft text-primary">
-                                              {chat.profile}
-                                            </span>
-                                          </div>
-                                          :
-                                          <div className="align-self-center me-3">
-                                            <img
-                                              src={chat.image}
+                                              src={
+                                                chat.image === '05656'
+                                                  ? instagram
+                                                  : chat.image === '0676'
+                                                    ? whatts
+                                                    : instagram
+                                              }
                                               className="rounded-circle avatar-xs"
                                               alt=""
                                             />
@@ -553,7 +402,7 @@ const Chat = props => {
                       <div className="chat-conversation p-3">
                         <ul className="list-unstyled">
                           <PerfectScrollbar
-                            style={{ height: "470px", backgroundImage:"/src/assets/images/chat/TelegramBackground.png"}}
+                            style={{ height: "470px"}}
                             containerRef={ref => setMessageBox(ref)}
                           >
                             

@@ -16,12 +16,12 @@ import { useFormik } from "formik";
 import { loginUser } from "../../store/actions";
 
 // import images
-import profile from "../../assets/images/profile-img.png";
-import logo from "../../assets/images/logo.svg";
+import profile from "../../assets/images/Login_png.png";
+import logo from "../../assets/images/canguru-jordan.svg";
 
 const Login = props => {
   //meta title
-  document.title = "Login | Skote - Vite React Admin & Dashboard Template";
+  document.title = "Login";
   const dispatch = useDispatch();
 
   const validation = useFormik({
@@ -59,17 +59,7 @@ const Login = props => {
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
                 <div className="bg-primary bg-soft">
-                  <Row>
-                    <Col xs={7}>
-                      <div className="text-primary p-4">
-                        <h5 className="text-primary">Seja Bem Vindo!</h5>
-                        <p>Logue na sua conta para continuar.</p>
-                      </div>
-                    </Col>
-                    <Col className="col-5 align-self-end">
-                      <img src={profile} alt="" className="img-fluid" />
-                    </Col>
-                  </Row>
+                  <img src={profile} alt="" className="img-fluid" />
                 </div>
                 <CardBody className="pt-0">
                   <div>
@@ -80,7 +70,7 @@ const Login = props => {
                             src={logo}
                             alt=""
                             className="rounded-circle"
-                            height="34"
+                            height="70"
                           />
                         </span>
                       </div>
@@ -156,13 +146,6 @@ const Login = props => {
                           Logar
                         </button>
                       </div>
-
-                      <div className="mt-4 text-center">
-                        <Link to="/forgot-password" className="text-muted">
-                          <i className="mdi mdi-lock me-1" />
-                          Esqueceu sua senha?
-                        </Link>
-                      </div>
                     </Form>
                   </div>
                 </CardBody>
@@ -176,8 +159,8 @@ const Login = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} 
+                  <i className="mdi mdi-heart text-danger" /> 
                 </p>
               </div>
             </Col>
