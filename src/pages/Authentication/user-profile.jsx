@@ -27,6 +27,11 @@ import { withRouter } from "react-router-dom";
 import Breadcrumb from "../../components/Common/Breadcrumb";
 
 import avatar from "../../assets/images/users/Icone_Usuario.png";
+import instagram from "../../assets/images/chat/InstagramIcone.png";
+import whatts from "../../assets/images/chat/WhatsappIcone.png";
+import voltar from "../../assets/images/chat/return.png";
+
+
 // actions
 import { editProfile, resetProfileFlag } from "../../store/actions";
 
@@ -87,8 +92,10 @@ const UserProfile = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumb */}
-          <Breadcrumb title="Skote" breadcrumbItem={props.t("Profile")} />
+          <a href='/chat'>
+            <img style={{width:'30px'}} src={voltar}/>
+          </a>
+          <Breadcrumb title="Omnichat" breadcrumbItem={props.t("Profile")} />
 
           <Row>
             <Col lg="12">
@@ -118,7 +125,7 @@ const UserProfile = (props) => {
             </Col>
           </Row>
 
-          <h4 className="card-title mb-4">{props.t("ChangeUserName")}</h4>
+          <h4 className="card-title mb-4">Altere seus dados</h4>
 
           <Card>
             <CardBody>
@@ -130,29 +137,88 @@ const UserProfile = (props) => {
                   return false;
                 }}
               >
-                <div className="form-group">
-                  <Label className="form-label">{props.t("Username")}</Label>
-                  <Input
-                    name="username"
-                    // value={name}
-                    className="form-control"
-                    placeholder={props.t("Username...")}
-                    type="text"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.username || ""}
-                    invalid={
-                      validation.touched.username && validation.errors.username ? true : false
-                    }
-                  />
-                  {validation.touched.username && validation.errors.username ? (
-                    <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                  ) : null}
-                  <Input name="idx" value={idx} type="hidden" />
+                <div style={{display:'flex', flexDirection:'row'}}>
+                  <div className="form-profile">
+                    <Label className="form-label">{props.t("Username")}</Label>
+                    <img className="img-register" src={avatar}/>
+                    <Input
+                      name="username"
+                      // value={name}
+                      className="form-control"
+                      placeholder={props.t("Username...")}
+                      type="text"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.username || ""}
+                      invalid={
+                        validation.touched.username && validation.errors.username ? true : false
+                      }
+                    />
+                    {validation.touched.username && validation.errors.username ? (
+                      <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                    ) : null}
+                    <Input name="idx" value={idx} type="hidden" />
+                  </div>
+                  <div className="form-profile">
+                    <Label className="form-label">Número do Whatsaap</Label>
+                    <img className="img-register" src={whatts}/>
+                    <Input
+                      name="number"
+                      className="form-control"
+                      placeholder='Número'
+                      type="text"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.username || ""}
+                      invalid={
+                        validation.touched.username && validation.errors.username ? true : false
+                      }
+                    />
+                    {validation.touched.username && validation.errors.username ? (
+                      <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                    ) : null}
+                    <Input name="idx" value={idx} type="hidden" />
+                  </div>
+                </div>
+                <div style={{display:'flex', flexDirection:'row'}}>
+                  <div className="form-profile">
+                    <Label className="form-label">Email do instagram</Label>
+                    <img className="img-register" src={instagram}/>
+                    <Input
+                     name="email"
+                     className="form-control"
+                     placeholder="Email"
+                     type="email"
+                     onChange={validation.handleChange}
+                     onBlur={validation.handleBlur}
+                     value={validation.values.email || ""}
+                     invalid={
+                       validation.touched.email && validation.errors.email ? true : false
+                     }
+                   />
+                   {validation.touched.email && validation.errors.email ? (
+                     <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                   ) : null}
+                    <Input name="idx" value={idx} type="hidden" />
+                  </div>
+                  <div className="form-profile">
+                    <Label className="form-label">Senha do instagram</Label>
+                    <img className="img-register" src={instagram}/>
+                    <Input
+                      name="password"
+                      className="form-control"
+                      placeholder={props.t("Username...")}
+                      type="text"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.username || ""}
+                    />
+                    <Input name="idx" value={idx} type="hidden" />
+                  </div>
                 </div>
                 <div className="text-center mt-4">
                   <Button type="submit" color="danger">
-                  {props.t("UpdateUsername")}
+                    Atualizar
                   </Button>
                 </div>
               </Form>

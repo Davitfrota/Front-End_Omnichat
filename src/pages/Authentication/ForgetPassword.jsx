@@ -60,7 +60,7 @@ const ForgetPasswordPage = props => {
                     <Col xs={7}>
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Seja Bem Vindo!</h5>
-                        <p>Sign in to continue to Skote.</p>
+                        <p>Faça o login.</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -143,8 +143,8 @@ const ForgetPasswordPage = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()}
+                  <i className="mdi mdi-heart text-danger" />
                 </p>
               </div>
             </Col>

@@ -35,13 +35,11 @@ import "react-perfect-scrollbar/dist/css/styles.css";
 
 //Import Breadcrumb
 import Breadcrumbs from "/src/components/Common/Breadcrumb";
+import ProfileMenu from "/src/components/CommonForBoth/TopbarDropdown/ProfileMenu";
+
 import images from "/src/assets/images";
-import IconeUsuario from "/src/assets/images/users/Icone_Usuario.png";
-import TelegramIcone from "/src/assets/images/chat/TelegramIcone.png";
-import MensageIcone from "/src/assets/images/chat/MensageIcone.png";
-import TelegramBackground from "/src/assets/images/chat/TelegramBackground.png";
-import WhatsappIcone from "/src/assets/images/chat/WhatsappIcone.png";
-import InstagramIcone from "/src/assets/images/chat/InstagramIcone.png";
+import instagram from "../../assets/images/chat/InstagramIcone.png";
+import whatts from "../../assets/images/chat/WhatsappIcone.png";
 
 import {
   addMessage as onAddMessage,
@@ -216,32 +214,23 @@ const Chat = props => {
 
   return (
     <React.Fragment>
-      <div className="page-content">
+      <div className="container">
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumbs title="Omnichat" breadcrumbItem= {props.t("Chat")} />
-         
-          <Row>
+          <div style={{marginTop:'20px'}}>
+            <Breadcrumbs title="Omnichat" breadcrumbItem= {props.t("Chat")} />
+          </div>
+          <Row >
             <Col lg="12">
-              <div className="d-lg-flex">
+              <div className="d-lg-flex" >
                 <div className="chat-leftsidebar me-lg-4">
                   <div >
                     <div className="py-4 border-bottom">
-                      <div className="d-flex">
-                        <div className="align-self-center me-3">
-                          <img
-                            src={IconeUsuario}
-                            className="avatar-xs rounded-circle"
-                            alt=""
-                          />
-                        </div>
-                        <div className="flex-grow-1">
-                          <h5 className="font-size-15 mt-0 mb-1">
-                            {currentUser.name}
-                          </h5>
+                      <div className="d-flex" style={{justifyContent:"center", alignItems:'center'}}>
+                      <ProfileMenu />
+                        <div className="flex-grow-1" style={{justifyContent:"center", alignItems:'center', }}>
                           <p className="text-muted mb-0">
                             <i className="mdi mdi-circle text-success align-middle me-2" />
-                            {props.t("Active")}
                           </p>
                         </div>
 
@@ -593,7 +582,7 @@ const Chat = props => {
                       <div className="chat-conversation p-3">
                         <ul className="list-unstyled">
                           <PerfectScrollbar
-                            style={{ height: "470px", backgroundImage:"/src/assets/images/chat/TelegramBackground.png"}}
+                            style={{ height: "470px"}}
                             containerRef={ref => setMessageBox(ref)}
                           >
                             

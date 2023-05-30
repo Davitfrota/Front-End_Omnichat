@@ -12,7 +12,7 @@ const chats = [
     id: 1,
     roomId: 1,
     status: "Offline",
-    image: instagram,
+    image: '05656',
     name: "Ronaldo",
     description: "boa noite! Quais os sabores estao disponiveis?",
     time: "05 min",
@@ -21,10 +21,11 @@ const chats = [
     id: 2,
     roomId: 2,
     status: "Online",
-    image: whatts,
+    image: '0676',
     name: "JAO",
     description: "Tem pizza quentinha ai meu patraum ?",
     time: "12 min",
+    plataform:'085'
   },
 
 ]

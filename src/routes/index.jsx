@@ -43,6 +43,7 @@ import ReCharts from "../pages/Charts/ReCharts";
 
 const authProtectedRoutes = [
   { path: "/", component: () => <Redirect to="/chat" />},
+  { path: "/dashboard", component: () => <Redirect to="/chat" />},
   
   //chat
   { path: "/chat", component: Chat },
@@ -59,9 +60,6 @@ const authProtectedRoutes = [
   { path: "/charts-knob", component: ChartsKnob },
   { path: "/re-charts", component: ReCharts },
 
-
-  //   // this route should be at the end of all other routes
-  //   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/chat" /> },
 ];
 
