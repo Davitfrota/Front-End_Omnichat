@@ -135,6 +135,8 @@ export const getMessages = (roomId = "") =>
 // post messages
 export const addMessage = message => post(url.ADD_MESSAGE, message)
 
+export const addChat = chat =>  post(url.ADD_MESSAGE, chat)
+
 export const receiveMessage = message => post(url.RECEIVE_MESSAGE, message)
 
 // get orders

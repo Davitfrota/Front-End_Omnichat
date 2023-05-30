@@ -10,7 +10,9 @@ import {
   POST_ADD_MESSAGE_SUCCESS,
   POST_ADD_MESSAGE_FAIL,
   RECEIVE_MESSAGE_SUCCESS,
-  RECEIVE_MESSAGE_FAIL
+  RECEIVE_MESSAGE_FAIL,
+  POST_ADD_CHAT_SUCCESS,
+  POST_ADD_CHAT_FAIL
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -76,6 +78,19 @@ const Calendar = (state = INIT_STATE, action) => {
         ...state,
         messages: [...state.messages, action.payload],
       }
+    
+    case POST_ADD_CHAT_SUCCESS:
+      return {
+        ...state,
+        chats: [...state.chats, action.payload]
+
+      }
+
+    case POST_ADD_CHAT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
 
     case POST_ADD_MESSAGE_FAIL:
       return {
@@ -89,6 +104,7 @@ const Calendar = (state = INIT_STATE, action) => {
         messages: [state.messages, action.payload]
 
       };
+    
     case RECEIVE_MESSAGE_FAIL:
       return {
         ...state,
