@@ -7,6 +7,7 @@ import {
   GET_GROUPS,
   GET_MESSAGES,
   POST_ADD_MESSAGE,
+  POST_ADD_CHAT,
   RECEIVE_MESSAGE_REQUEST
 } from "./actionTypes";
 import {
@@ -20,10 +21,13 @@ import {
   getMessagesFail,
   addMessageSuccess,
   addMessageFail,
+  addChatSuccess,
+  addChatFail
 } from "./actions";
 
 //Include Both Helper File with needed methods
 import {
+  addChat,
   getChats,
   getGroups,
   getContacts,
@@ -32,12 +36,28 @@ import {
   receiveMessage,
 } from "../../helpers/fakebackend_helper";
 
+// import { getChats, addChat, updateChat, addMessage, getMessages } from './api';
+
+// agora você pode usar essas funções aqui
+
+
 function* onGetChats() {
   try {
     const response = yield call(getChats);
     yield put(getChatsSuccess(response));
   } catch (error) {
     yield put(getChatsFail(error));
+  }
+}
+
+function* onAddChats({ chat }) {
+  try {
+    console.log('procurando chat')
+    const response = yield call(addChat, chat );
+    yield put(addChatSuccess(response));
+    console.log("deu certo")
+  } catch (error) {
+    yield put(addChatFail(error));
   }
 }
 
@@ -89,11 +109,13 @@ function* onReceiveMessage({ message }) {
 
 function* chatSaga() {
   yield takeEvery(GET_CHATS, onGetChats);
+  yield takeEvery(POST_ADD_CHAT, onAddChats)
   yield takeEvery(GET_GROUPS, onGetGroups);
   yield takeEvery(GET_CONTACTS, onGetContacts);
   yield takeEvery(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);
   yield takeEvery(RECEIVE_MESSAGE_REQUEST, onReceiveMessage);
 }
+
 
 export default chatSaga;

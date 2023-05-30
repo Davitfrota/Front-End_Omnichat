@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { isEmpty, map } from "lodash";
-
+import io from 'socket.io-client';
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 import {
@@ -45,15 +45,18 @@ import InstagramIcone from "/src/assets/images/chat/InstagramIcone.png";
 
 import {
   addMessage as onAddMessage,
+  addChat as onAddChat,
   getChats as onGetChats,
   getContacts as onGetContacts,
   getGroups as onGetGroups,
   getMessages as onGetMessages,
+
   receiveMessageRequest as OnReceiveMessage
 } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
+
 
 const Chat = props => {
 
@@ -71,7 +74,7 @@ const Chat = props => {
 
   const [messageBox, setMessageBox] = useState(null)
   // const Chat_Box_Username2 = "Henry Wells"
-  const [currentRoomId, setCurrentRoomId] = useState(null);
+  const [currentTelephone, setCurrentTelephone] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [currentUser, setCurrentUser] = useState({
     name: "Davi Frota",
@@ -87,18 +90,36 @@ const Chat = props => {
   const [Chat_Box_User_Status, setChat_Box_User_Status] = useState(false);
   const [curMessage, setcurMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState('');
+  
+  const socket = io('http://localhost:8000');
   useEffect(() => {
     dispatch(onGetChats());
     dispatch(onGetGroups());
     dispatch(onGetContacts());
-    dispatch(onGetMessages(currentRoomId));
-  }, [onGetChats, onGetGroups, onGetContacts, onGetMessages, currentRoomId]);
+    dispatch(onGetMessages(currentTelephone));
+  }, [onGetChats, onAddChat, onAddMessage, onGetGroups, onGetContacts, onGetMessages, currentTelephone]);
 
   useEffect(() => {
     if (!isEmpty(messages)) scrollToBottom();
   }, [messages]);
 
-  
+  useEffect(() => {
+     // Substitua pelo seu servidor Socket.IO
+    // Evento para receber mensagens do servidor
+    socket.on('user_message', (data) => {
+      console.log('mensagem recebida do usuário:', data);
+      handleMessage(data)
+    });
+
+    socket.on('dialogflow_message', (data) => {
+      console.log('mensagem dialogflow:', data);
+      handleMessage(data)
+    });
+    
+    return () => {
+      socket.disconnect()
+    };
+  }, []);
   // const toggleNotification = () => {
   //   setnotification_Menu(!notification_Menu)
   // }
@@ -122,23 +143,42 @@ const Chat = props => {
     }
   };
 
+  const handleMessage = (messageData) => {
+  const chatExists = chats.some(chat => chat.id === messageData.telephone);
+    addMessage(messageData)
+  
+    if (!chatExists) {
+    console.log('quantidade de chats: ' + chats.length)
+    // Ajuste esta linha de acordo com a estrutura do seu estado de chat
+    
+    const newChat = { id: messageData.telephone, from: messageData.from, name: messageData.sender, messages: [], status: "active" };
+    dispatch(onAddChat(newChat));
+    }
+  
+    
+  }
+
   //Use For Chat Box
   const userChatOpen = (id, name, status, roomId) => {
     setChat_Box_Username(name);
     setChat_Box_User_Status(status);
-    setCurrentRoomId(roomId);
+    setCurrentTelephone(roomId);
     dispatch(onGetMessages(roomId));
   };
 
-  const addMessage = (roomId, sender) => {
+  const addMessage = (messageData) => {
+    if (messageData.telephone == currentTelephone) {
+      setcurMessage(messageData.body);
+     }
+  
     const message = {
       id: Math.floor(Math.random() * 100),
-      roomId,
-      sender,
-      message: curMessage,
-      createdAt: new Date(),
+      telephone: messageData.telephone,
+      sender: messageData.sender,
+      message: messageData.body,
+      time: messageData.time,
     };
-    setcurMessage("");
+    //setcurMessage("");
     dispatch(onAddMessage(message));
   };
 
@@ -152,7 +192,7 @@ const Chat = props => {
     const { key, value } = e;
     if (key === "Enter") {
       setcurMessage(value);
-      addMessage(currentRoomId, currentUser.name);
+      addMessage(currentTelephone, currentUser.name, value);
     }
   };
 
@@ -180,7 +220,7 @@ const Chat = props => {
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumbs title="Omnichat" breadcrumbItem= {props.t("Chat")} />
-
+         
           <Row>
             <Col lg="12">
               <div className="d-lg-flex">
@@ -238,7 +278,7 @@ const Chat = props => {
                                   <li
                                     key={chat.id + chat.status}
                                     className={
-                                      currentRoomId === chat.roomId
+                                      currentTelephone === chat.telephone
                                         ? props.t("Active")
                                         : ""
                                     }
@@ -250,7 +290,7 @@ const Chat = props => {
                                           chat.id,
                                           chat.name,
                                           chat.status,
-                                          chat.roomId
+                                          chat.telephone
                                         );
                                       }}
                                     >
@@ -275,7 +315,7 @@ const Chat = props => {
                                           :
                                           <div className="align-self-center me-3">
                                             <img
-                                              src={chat.image}
+                                              src={chat.from === 'whatsapp' ? WhatsappIcone : InstagramIcone}
                                               className="rounded-circle avatar-xs"
                                               alt=""
                                             />
@@ -311,7 +351,7 @@ const Chat = props => {
                                   <li
                                     key={chat.id + chat.status}
                                     className={
-                                      currentRoomId === chat.roomId
+                                      currentTelephone === chat.telephone
                                         ? props.t("Active")
                                         : ""
                                     }
@@ -323,7 +363,7 @@ const Chat = props => {
                                           chat.id,
                                           chat.name,
                                           chat.status,
-                                          chat.roomId
+                                          chat.telephone
                                         );
                                       }}
                                     >
@@ -348,7 +388,7 @@ const Chat = props => {
                                           :
                                           <div className="align-self-center me-3">
                                             <img
-                                              src={chat.image}
+                                              src={chat.from === 'whatsapp' ? WhatsappIcone : InstagramIcone}
                                               className="rounded-circle avatar-xs"
                                               alt=""
                                             />
@@ -384,7 +424,7 @@ const Chat = props => {
                                   <li
                                     key={chat.id + chat.status}
                                     className={
-                                      currentRoomId === chat.roomId
+                                      currentTelephone === chat.telephone
                                         ? props.t("Active")
                                         : ""
                                     }
@@ -396,7 +436,7 @@ const Chat = props => {
                                           chat.id,
                                           chat.name,
                                           chat.status,
-                                          chat.roomId
+                                          chat.telephone
                                         );
                                       }}
                                     >
@@ -421,7 +461,7 @@ const Chat = props => {
                                           :
                                           <div className="align-self-center me-3">
                                             <img
-                                              src={chat.image}
+                                              src={chat.from === 'whatsapp' ? WhatsappIcone : InstagramIcone}
                                               className="rounded-circle avatar-xs"
                                               alt=""
                                             />
@@ -567,7 +607,7 @@ const Chat = props => {
                                 <li
                                   key={"test_k" + message.id}
                                   className={
-                                    message.sender === currentUser.name
+                                    message.sender === currentUser.name || message.sender === 'ChatBot'
                                       ? "right"
                                       : ""
                                   }
@@ -617,7 +657,11 @@ const Chat = props => {
                                 type="text"
                                 value={curMessage}
                                 onKeyPress={onKeyPress}
-                                onChange={e => setcurMessage(e.target.value)}
+                                onChange={e => {
+                                  setcurMessage(e.target.value)
+                                  console.log('enviando mensagem')
+                                socket.emit('sendMessage', e.target.value)
+                                }}
                                 className="form-control chat-input"
                                 placeholder={props.t("EnterMessage")}
                               />
@@ -674,7 +718,7 @@ const Chat = props => {
                               type="button"
                               color="primary"
                               onClick={() =>
-                                addMessage(currentRoomId, currentUser.name)
+                                addMessage(currentTelephone, currentUser.name)
                               }
                               className="btn btn-primary btn-rounded chat-send w-md "
                             >
@@ -708,6 +752,7 @@ Chat.propTypes = {
   onGetContacts: PropTypes.func,
   onGetMessages: PropTypes.func,
   onAddMessage: PropTypes.func,
+  onAddChat:PropTypes.func,
 };
 
 export default withTranslation()(Chat);
