@@ -1,0 +1,11 @@
+.unread-message-count {
+  display: block;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  line-height: 1;
+  min-width: 20px;
+  text-align: center;
+}

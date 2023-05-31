@@ -8,7 +8,8 @@ import {
   GET_MESSAGES,
   POST_ADD_MESSAGE,
   POST_ADD_CHAT,
-  RECEIVE_MESSAGE_REQUEST
+  RECEIVE_MESSAGE_REQUEST,
+  PUT_UPDATE_CHAT
 } from "./actionTypes";
 import {
   getChatsSuccess,
@@ -22,10 +23,12 @@ import {
   addMessageSuccess,
   addMessageFail,
   addChatSuccess,
-  addChatFail
+  addChatFail,
+  updateChatFail
 } from "./actions";
 
-//Include Both Helper File with needed methods
+//Include Both Helper File with needed methods]
+/*
 import {
   addChat,
   getChats,
@@ -35,8 +38,10 @@ import {
   addMessage,
   receiveMessage,
 } from "../../helpers/fakebackend_helper";
+*/
 
-// import { getChats, addChat, updateChat, addMessage, getMessages } from './api';
+import { getChats, addChat, updateChat, addMessage, getMessages } from './api';
+
 
 // agora você pode usar essas funções aqui
 
@@ -52,8 +57,9 @@ function* onGetChats() {
 
 function* onAddChats({ chat }) {
   try {
-    console.log('procurando chat')
-    const response = yield call(addChat, chat );
+    console.log('procurando chat: chat')
+    const response = yield call(addChat, chat);
+    console.log(response)
     yield put(addChatSuccess(response));
     console.log("deu certo")
   } catch (error) {
@@ -61,27 +67,10 @@ function* onAddChats({ chat }) {
   }
 }
 
-function* onGetGroups() {
+function* onGetMessages({ phoneNumber }) {
   try {
-    const response = yield call(getGroups);
-    yield put(getGroupsSuccess(response));
-  } catch (error) {
-    yield put(getGroupsFail(error));
-  }
-}
-
-function* onGetContacts() {
-  try {
-    const response = yield call(getContacts);
-    yield put(getContactsSuccess(response));
-  } catch (error) {
-    yield put(getContactsFail(error));
-  }
-}
-
-function* onGetMessages({ roomId }) {
-  try {
-    const response = yield call(getMessages, roomId);
+    console.log(phoneNumber)
+    const response = yield call(getMessages, phoneNumber);
     yield put(getMessagesSuccess(response));
   } catch (error) {
     yield put(getMessagesFail(error));
@@ -97,24 +86,22 @@ function* onAddMessage({ message }) {
   }
 }
 
-function* onReceiveMessage({ message }) { 
- try {
-   const response = yield call(receiveMessage, message);
-   console.log(response)
-    yield put(addMessageSuccess(response));
+function* onUpdateChat({ messageData }) {
+  try {
+    const response = yield call(updateChat, messageData);
+    yield put(updateChatSuccess(response));
   } catch (error) {
-    yield put(addMessageFail(error));
+    yield put(updateChatFail(error));
   }
-}
+ }
+
 
 function* chatSaga() {
   yield takeEvery(GET_CHATS, onGetChats);
   yield takeEvery(POST_ADD_CHAT, onAddChats)
-  yield takeEvery(GET_GROUPS, onGetGroups);
-  yield takeEvery(GET_CONTACTS, onGetContacts);
+  yield takeEvery(PUT_UPDATE_CHAT, onUpdateChat)
   yield takeEvery(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);
-  yield takeEvery(RECEIVE_MESSAGE_REQUEST, onReceiveMessage);
 }
 
 

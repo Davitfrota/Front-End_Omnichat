@@ -1,36 +1,66 @@
-// api.j
 import axios from 'axios';
 
-const URL = 'http://localhost:8000'
+const API_URL = 'http://localhost:8000'
+
+const axiosApi = axios.create({
+    baseURL: API_URL,
+})
 
 export const getChats = async () => {
-    const response = await axios.get(`${URL}/get_chats`);
-  return response.data;
-
+    try {
+        const response = await axiosApi.get(`/get_all_conversations`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar chats", error);
+        throw error;
+    }
 }
 
 // Adicionar um novo chat
 export const addChat = async (chatData) => {
-    const response = await axios.post(`${URL}/add_chat`, chatData);
-    return response.data;
+    try {
+        if (!chatData) throw new Error("Dados de chat inválidos");
+        const response = await axiosApi.post(`/create_conversation`, chatData);
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao adicionar chat", error);
+        throw error;
+    }
 }
 
 // Atualizar um chat existente
-export const updateChat = async (chatId, chatData) => {
-    const response = await axios.put(`${URL}/update_chat/${chatId}`, chatData);
-    return response.data;
+export const updateChat = async (chatData) => {
+    try {
+        if (!chatData) throw new Error("Dados de chat inválidos");
+        const response = await axiosApi.put(`/update_conversation`, chatData);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao atualizar chat", error);
+        throw error;
+    }
 }
 
 // Adicionar uma nova mensagem
-export const addMessage = async (roomId, messageData) => {
-    const response = await axios.post(`${URL}/add_message/${roomId}`, messageData);
-    return response.data;
+export const addMessage = async (messageData) => {
+    try {
+        if (!messageData) throw new Error("Dados de mensagem inválidos");
+        const response = await axiosApi.post(`/add_message`, messageData);
+        return messageData;
+    } catch (error) {
+        console.error("Erro ao adicionar mensagem", error);
+        throw error;
+    }
 }
 
 // Obter mensagens de um chat (room) específico
-export const getMessages = async (roomId) => {
-    const response = await axios.get(`${URL}/get_messages/${roomId}`);
-    return response.data;
+export const getMessages = async (telephone) => {
+    try {
+        if (!telephone) throw new Error("ID de sala inválido");
+        const response = await axiosApi.get(`/get_user_conversations/${telephone}`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao obter mensagens", error);
+        throw error;
+    }
 }
-
-

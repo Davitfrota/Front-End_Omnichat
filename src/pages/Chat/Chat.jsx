@@ -28,7 +28,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import classnames from "classnames";
-
+import './Chat.css'
 //Import Scrollbar
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -48,12 +48,14 @@ import {
   getContacts as onGetContacts,
   getGroups as onGetGroups,
   getMessages as onGetMessages,
-
+  updateChat as onUpdateChat,
   receiveMessageRequest as OnReceiveMessage
 } from "/src/store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
+import { updateChat } from "../../store/chat/api";
+import { current } from "@reduxjs/toolkit";
 
 
 const Chat = props => {
@@ -72,7 +74,7 @@ const Chat = props => {
 
   const [messageBox, setMessageBox] = useState(null)
   // const Chat_Box_Username2 = "Henry Wells"
-  const [currentTelephone, setCurrentTelephone] = useState(null);
+  const [currentPhoneNumber, setCurrentPhoneNumber] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [currentUser, setCurrentUser] = useState({
     name: "Davi Frota",
@@ -94,8 +96,9 @@ const Chat = props => {
     dispatch(onGetChats());
     dispatch(onGetGroups());
     dispatch(onGetContacts());
-    dispatch(onGetMessages(currentTelephone));
-  }, [onGetChats, onAddChat, onAddMessage, onGetGroups, onGetContacts, onGetMessages, currentTelephone]);
+    
+  }, [onGetChats,onUpdateChat, onAddChat, onAddMessage, onGetGroups, onGetContacts, onGetMessages, 
+  currentPhoneNumber]);
 
   useEffect(() => {
     if (!isEmpty(messages)) scrollToBottom();
@@ -142,42 +145,54 @@ const Chat = props => {
   };
 
   const handleMessage = (messageData) => {
-  const chatExists = chats.some(chat => chat.id === messageData.telephone);
-    addMessage(messageData)
+    const chatsArray = Object.values(chats);
+    
+const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phoneNumber);
+
+    
   
     if (!chatExists) {
-    console.log('quantidade de chats: ' + chats.length)
+    console.log('quantidade de chats: ' + chatsArray)
     // Ajuste esta linha de acordo com a estrutura do seu estado de chat
     
-    const newChat = { id: messageData.telephone, from: messageData.from, name: messageData.sender, messages: [], status: "active" };
+    const newChat = {id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, lastMessage: messageData, unreadMessages: [messageData], name: messageData.sender, status: "active" };
     dispatch(onAddChat(newChat));
     }
   
-    
+    addMessage(messageData)
   }
 
   //Use For Chat Box
-  const userChatOpen = (id, name, status, roomId) => {
+  const userChatOpen = (name, status, phoneNumber) => {
     setChat_Box_Username(name);
     setChat_Box_User_Status(status);
-    setCurrentTelephone(roomId);
-    dispatch(onGetMessages(roomId));
+    console.log(phoneNumber)
+    setCurrentPhoneNumber(phoneNumber);
+    dispatch(onUpdateChat({ phoneNumber: phoneNumber, unreadMessages: [] }))
+    dispatch(onGetMessages(phoneNumber));
   };
 
   const addMessage = (messageData) => {
-    if (messageData.telephone == currentTelephone) {
+    if (messageData.phoneNumber == 
+      currentPhoneNumber) {
       setcurMessage(messageData.body);
      }
-  
+    else {
+      AddUnreadMessageToChat(messageData)
+     }
     const message = {
-      id: Math.floor(Math.random() * 100),
-      telephone: messageData.telephone,
+      
+      phoneNumber: messageData.phoneNumber,
       sender: messageData.sender,
       message: messageData.body,
       time: messageData.time,
     };
     //setcurMessage("");
-    dispatch(onAddMessage(message));
+    try {
+      dispatch(onAddMessage(message));
+      return message;
+    } catch (err) { }
+      console.log(err);
   };
 
   const scrollToBottom = () => {
@@ -186,11 +201,14 @@ const Chat = props => {
     }
   };
 
+  const AddUnreadMessageToChat = (messageData) => { 
+      dispatch(onUpdateChat(messageData))
+  }
   const onKeyPress = e => {
     const { key, value } = e;
     if (key === "Enter") {
       setcurMessage(value);
-      addMessage(currentTelephone, currentUser.name, value);
+      addMessage(currentPhoneNumber, currentUser.name, value);
     }
   };
 
@@ -265,9 +283,9 @@ const Chat = props => {
                               <PerfectScrollbar style={{ height: "410px" }}>
                                 {map(chats, chat => (
                                   <li
-                                    key={chat.id + chat.status}
+                                    key={chat.id + chat.phoneNumber}
                                     className={
-                                      currentTelephone === chat.telephone
+                                      currentPhoneNumber === chat.phoneNumber
                                         ? props.t("Active")
                                         : ""
                                     }
@@ -276,10 +294,9 @@ const Chat = props => {
                                       to="#"
                                       onClick={() => {
                                         userChatOpen(
-                                          chat.id,
                                           chat.name,
                                           chat.status,
-                                          chat.telephone
+                                          chat.phoneNumber
                                         );
                                       }}
                                     >
@@ -304,7 +321,7 @@ const Chat = props => {
                                           :
                                           <div className="align-self-center me-3">
                                             <img
-                                              src={chat.from === 'whatsapp' ? WhatsappIcone : InstagramIcone}
+                                              src={chat.from === 'whatsapp' ? whatts : instagram}
                                               className="rounded-circle avatar-xs"
                                               alt=""
                                             />
@@ -315,13 +332,22 @@ const Chat = props => {
                                           <h5 className="text-truncate font-size-14 mb-1">
                                             {chat.name}
                                           </h5>
-                                          <p className="text-truncate mb-0">
-                                            {chat.description}
-                                          </p>
+                                          
+                                            <p className="text-truncate mb-0">
+                                              {chat.lastMessage.body}
+                                            </p>
+                                          
                                         </div>
+                                        <div className="flex overflow-hidden">
                                         <div className="font-size-11">
-                                          {chat.time}
-                                        </div>
+                                          {chat.lastMessage.time}
+                                          </div>
+                                          {chat.unreadMessages && chat.unreadMessages.length > 0 &&
+                                              <div className="unread-message-count">
+                                                  {chat.unreadMessages.length}
+                                                </div>
+                                              }
+                                          </div>
                                       </div>
                                     </Link>
                                   </li>
@@ -331,151 +357,7 @@ const Chat = props => {
                           </div>
                         </TabPane>
 
-                        <TabPane tabId="2">
-                          <div>
-                            <h5 className="font-size-14 mb-3">{props.t("Recent")}</h5>
-                            <ul className="list-unstyled chat-list" id="recent-list">
-                              <PerfectScrollbar style={{ height: "410px" }}>
-                                {map(chats, chat => (
-                                  <li
-                                    key={chat.id + chat.status}
-                                    className={
-                                      currentTelephone === chat.telephone
-                                        ? props.t("Active")
-                                        : ""
-                                    }
-                                  >
-                                    <Link
-                                      to="#"
-                                      onClick={() => {
-                                        userChatOpen(
-                                          chat.id,
-                                          chat.name,
-                                          chat.status,
-                                          chat.telephone
-                                        );
-                                      }}
-                                    >
-                                      <div className="d-flex">
-                                        <div className="align-self-center me-3">
-                                          <i
-                                            className={
-                                              chat.status === props.t("Active")
-                                                ? "mdi mdi-circle text-success font-size-10"
-                                                : chat.status === "intermediate"
-                                                  ? "mdi mdi-circle text-warning font-size-10"
-                                                  : "mdi mdi-circle font-size-10"
-                                            }
-                                          />
-                                        </div>
-                                        {chat.isImg ?
-                                          <div className="avatar-xs align-self-center me-3">
-                                            <span className="avatar-title rounded-circle bg-primary bg-soft text-primary">
-                                              {chat.profile}
-                                            </span>
-                                          </div>
-                                          :
-                                          <div className="align-self-center me-3">
-                                            <img
-                                              src={chat.from === 'whatsapp' ? WhatsappIcone : InstagramIcone}
-                                              className="rounded-circle avatar-xs"
-                                              alt=""
-                                            />
-                                          </div>
-                                        }
-
-                                        <div className="flex-grow-1 overflow-hidden">
-                                          <h5 className="text-truncate font-size-14 mb-1">
-                                            {chat.name}
-                                          </h5>
-                                          <p className="text-truncate mb-0">
-                                            {chat.description}
-                                          </p>
-                                        </div>
-                                        <div className="font-size-11">
-                                          {chat.time}
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </li>
-                                ))}
-                              </PerfectScrollbar>
-                            </ul>
-                          </div>
-                        </TabPane>
-
-                        <TabPane tabId="3">
-                          <div>
-                            <h5 className="font-size-14 mb-3">{props.t("Recent")}</h5>
-                            <ul className="list-unstyled chat-list" id="recent-list">
-                              <PerfectScrollbar style={{ height: "410px" }}>
-                                {map(chats, chat => (
-                                  <li
-                                    key={chat.id + chat.status}
-                                    className={
-                                      currentTelephone === chat.telephone
-                                        ? props.t("Active")
-                                        : ""
-                                    }
-                                  >
-                                    <Link
-                                      to="#"
-                                      onClick={() => {
-                                        userChatOpen(
-                                          chat.id,
-                                          chat.name,
-                                          chat.status,
-                                          chat.telephone
-                                        );
-                                      }}
-                                    >
-                                      <div className="d-flex">
-                                        <div className="align-self-center me-3">
-                                          <i
-                                            className={
-                                              chat.status === props.t("Active")
-                                                ? "mdi mdi-circle text-success font-size-10"
-                                                : chat.status === "intermediate"
-                                                  ? "mdi mdi-circle text-warning font-size-10"
-                                                  : "mdi mdi-circle font-size-10"
-                                            }
-                                          />
-                                        </div>
-                                        {chat.isImg ?
-                                          <div className="avatar-xs align-self-center me-3">
-                                            <span className="avatar-title rounded-circle bg-primary bg-soft text-primary">
-                                              {chat.profile}
-                                            </span>
-                                          </div>
-                                          :
-                                          <div className="align-self-center me-3">
-                                            <img
-                                              src={chat.from === 'whatsapp' ? WhatsappIcone : InstagramIcone}
-                                              className="rounded-circle avatar-xs"
-                                              alt=""
-                                            />
-                                          </div>
-                                        }
-
-                                        <div className="flex-grow-1 overflow-hidden">
-                                          <h5 className="text-truncate font-size-14 mb-1">
-                                            {chat.name}
-                                          </h5>
-                                          <p className="text-truncate mb-0">
-                                            {chat.description}
-                                          </p>
-                                        </div>
-                                        <div className="font-size-11">
-                                          {chat.time}
-                                        </div>
-                                      </div>
-                                    </Link>
-                                  </li>
-                                ))}
-                              </PerfectScrollbar>
-                            </ul>
-                          </div>
-                        </TabPane>
+                      
                       </TabContent>
                     </div>
                   </div>
@@ -591,7 +473,7 @@ const Chat = props => {
                                 <span className="title">{props.t("Today")}</span>
                               </div>
                             </li>
-                            {messages &&
+                            {messages && messages.length > 0 && messages[0].phoneNumber == currentPhoneNumber &&
                               map(messages, message => (
                                 <li
                                   key={"test_k" + message.id}
@@ -707,7 +589,7 @@ const Chat = props => {
                               type="button"
                               color="primary"
                               onClick={() =>
-                                addMessage(currentTelephone, currentUser.name)
+                                addMessage(currentPhoneNumber, currentUser.name)
                               }
                               className="btn btn-primary btn-rounded chat-send w-md "
                             >

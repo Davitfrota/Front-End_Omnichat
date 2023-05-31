@@ -19,11 +19,30 @@ import {
   RECEIVE_MESSAGE_FAIL,
   POST_ADD_CHAT,
   POST_ADD_CHAT_SUCCESS,
-  POST_ADD_CHAT_FAIL
+  POST_ADD_CHAT_FAIL,
+  PUT_UPDATE_CHAT,
+  PUT_UPDATE_CHAT_SUCCESS,
+  PUT_UPDATE_CHAT_FAIL
 } from "./actionTypes"
 
 export const getChats = () => ({
   type: GET_CHATS,
+})
+
+export const updateChat = (messageData) => ({
+  type: PUT_UPDATE_CHAT, 
+  messageData,
+  
+})
+
+export const updateChatSuccess = chat => ({
+  type: PUT_UPDATE_CHAT_SUCCESS,
+  payload: chat,
+})
+
+export const updateChatFail = error => ({
+  type: PUT_UPDATE_CHAT_FAIL, 
+  payload: error,
 })
 
 export const getChatsSuccess = chats => ({
@@ -64,9 +83,9 @@ export const getContactsFail = error => ({
   payload: error,
 })
 
-export const getMessages = roomId => ({
+export const getMessages = phoneNumber => ({
   type: GET_MESSAGES,
-  roomId,
+  phoneNumber,
 })
 
 export const getMessagesSuccess = messages => ({
