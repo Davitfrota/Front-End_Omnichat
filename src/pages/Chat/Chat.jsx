@@ -26,6 +26,7 @@ import {
   TabPane,
   UncontrolledDropdown,
   UncontrolledTooltip,
+  Alert
 } from "reactstrap";
 import classnames from "classnames";
 import './Chat.css'
@@ -65,12 +66,6 @@ const Chat = props => {
 
   const dispatch = useDispatch();
 
-  const { chats, groups, contacts, messages } = useSelector(state => ({
-    chats: state.chat.chats,
-    groups: state.chat.groups,
-    contacts: state.chat.contacts,
-    messages: state.chat.messages,
-  }));
 
   const [messageBox, setMessageBox] = useState(null)
   // const Chat_Box_Username2 = "Henry Wells"
@@ -94,26 +89,34 @@ const Chat = props => {
   const socket = io('http://localhost:8000');
   useEffect(() => {
     dispatch(onGetChats());
-    dispatch(onGetGroups());
-    dispatch(onGetContacts());
     
-  }, [onGetChats,onUpdateChat, onAddChat, onAddMessage, onGetGroups, onGetContacts, onGetMessages, 
-  currentPhoneNumber]);
+  }, [onGetChats, onAddChat, onAddMessage, onGetMessages,
+    currentPhoneNumber]);
 
+  
+  const { chats, groups, contacts, messages, loading, error } = useSelector(state => ({
+    chats: state.chat.chats,
+    groups: state.chat.groups,
+    contacts: state.chat.contacts,
+    messages: state.chat.messages,
+    loading: state.chat.loading,
+    error: state.chat.error
+  }));
+  
   useEffect(() => {
     if (!isEmpty(messages)) scrollToBottom();
   }, [messages]);
 
   useEffect(() => {
-     // Substitua pelo seu servidor Socket.IO
+    // Substitua pelo seu servidor Socket.IO
     // Evento para receber mensagens do servidor
     socket.on('user_message', (data) => {
-      console.log('mensagem recebida do usuário:', data);
+      //console.log('mensagem recebida do usuário:', data);
       handleMessage(data)
     });
 
     socket.on('dialogflow_message', (data) => {
-      console.log('mensagem dialogflow:', data);
+      //console.log('mensagem dialogflow:', data);
       handleMessage(data)
     });
     
@@ -145,31 +148,38 @@ const Chat = props => {
   };
 
   const handleMessage = (messageData) => {
-    const chatsArray = Object.values(chats);
-    
-const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phoneNumber);
+    // Cria um array com todos os chats
+    let chatsArray = Object.values(chats);
+    console.log('chatsArray:', chatsArray[0]);
 
-    
-  
+    const chatExists = chatsArray.some(chat => {
+      console.log('chat.phoneNumber:', chat.phoneNumber);
+      console.log('messageData.phoneNumber:', messageData.phoneNumber);
+      return chat.phoneNumber === messageData.phoneNumber;
+    });
+
     if (!chatExists) {
-    console.log('quantidade de chats: ' + chatsArray)
-    // Ajuste esta linha de acordo com a estrutura do seu estado de chat
-    
-    const newChat = {id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, lastMessage: messageData, unreadMessages: [messageData], name: messageData.sender, status: "active" };
-    dispatch(onAddChat(newChat));
+      console.log('quantidade de chats: ' + chatsArray.length);
+      // Ajuste esta linha de acordo com a estrutura do seu estado de chat
+
+      const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, lastMessage: messageData, unreadMessages: [messageData], name: messageData.sender, status: "active" };
+      dispatch(onAddChat(newChat));
     }
-  
-    addMessage(messageData)
-  }
+
+    addMessage(messageData);
+}
+
 
   //Use For Chat Box
-  const userChatOpen = (name, status, phoneNumber) => {
-    setChat_Box_Username(name);
-    setChat_Box_User_Status(status);
-    console.log(phoneNumber)
-    setCurrentPhoneNumber(phoneNumber);
-    dispatch(onUpdateChat({ phoneNumber: phoneNumber, unreadMessages: [] }))
-    dispatch(onGetMessages(phoneNumber));
+  const userChatOpen = (chat) => {
+    setChat_Box_Username(chat.name);
+    setChat_Box_User_Status(chat.status);
+    console.log(chat.phoneNumber)
+    setCurrentPhoneNumber(chat.phoneNumber);
+    if (chat.unreadMessages && chat.unreadMessages.length > 0) {
+      dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: [] }))
+    }
+    dispatch(onGetMessages(chat.phoneNumber));
   };
 
   const addMessage = (messageData) => {
@@ -234,6 +244,7 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
     <React.Fragment>
       <div className="container">
         <Container fluid>
+         {/*error.length != 0 && <Alert color="danger"><p>{error[error.length -1].message}</p></Alert>*/}
           {/* Render Breadcrumb */}
           <div style={{marginTop:'20px'}}>
             <Breadcrumbs title="Omnichat" breadcrumbItem= {props.t("Chat")} />
@@ -281,7 +292,20 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
                             <h5 className="font-size-14 mb-3">{props.t("Recent")}</h5>
                             <ul className="list-unstyled chat-list" id="recent-list">
                               <PerfectScrollbar style={{ height: "410px" }}>
-                                {map(chats, chat => (
+                                {loading &&  <div className="loading-messages"> 
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div> }
+                                {!chats ?
+      <div className="error-message">
+        <p className="error-message-text">An error occurred while loading chats</p>
+      </div>
+      : chats.length === 0 ?
+                                
+                                  <p>Não há chats disponíveis</p>	
+                                
+                                : map(chats, chat => (
                                   <li
                                     key={chat.id + chat.phoneNumber}
                                     className={
@@ -293,11 +317,7 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
                                     <Link
                                       to="#"
                                       onClick={() => {
-                                        userChatOpen(
-                                          chat.name,
-                                          chat.status,
-                                          chat.phoneNumber
-                                        );
+                                        userChatOpen(chat);
                                       }}
                                     >
                                       <div className="d-flex">
@@ -332,16 +352,20 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
                                           <h5 className="text-truncate font-size-14 mb-1">
                                             {chat.name}
                                           </h5>
-                                          
+                                          {chat.lastMessage &&
                                             <p className="text-truncate mb-0">
-                                              {chat.lastMessage.body}
+                                              {chat.lastMessage.sender}: {chat.lastMessage.body}
                                             </p>
-                                          
+                                          }
                                         </div>
                                         <div className="flex overflow-hidden">
-                                        <div className="font-size-11">
-                                          {chat.lastMessage.time}
-                                          </div>
+                                          {chat.lastMessage &&
+                                            <div className="font-size-11">
+                                            
+                                              {chat.lastMessage.time}
+                                            </div>
+                                          }
+                                          
                                           {chat.unreadMessages && chat.unreadMessages.length > 0 &&
                                               <div className="unread-message-count">
                                                   {chat.unreadMessages.length}
@@ -363,29 +387,32 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
                   </div>
                 </div>
                 <div className="w-100 user-chat">
+                  
                   <Card>
+                    
                     <div className="p-4 border-bottom ">
-                      <Row>
-                        <Col md="4" xs="9">
-                          <h5 className="font-size-15 mb-1">
-                            {Chat_Box_Username}
-                          </h5>
+                      {currentPhoneNumber &&
+                        <Row>
+                          <Col md="4" xs="9">
+                            <h5 className="font-size-15 mb-1">
+                              {Chat_Box_Username}
+                            </h5>
 
-                          <p className="text-muted mb-0">
-                            <i
-                              className={
-                                Chat_Box_User_Status === props.t("Active")
-                                  ? "mdi mdi-circle text-success align-middle me-2"
-                                  : Chat_Box_User_Status === "intermediate"
-                                    ? "mdi mdi-circle text-warning align-middle me-1"
-                                    : "mdi mdi-circle align-middle me-1"
-                              }
-                            />
-                            {Chat_Box_User_Status}
-                          </p>
-                        </Col>
-                        <Col md="8" xs="3">
-                          {/* <ul className="list-inline user-chat-nav text-end mb-0">
+                            <p className="text-muted mb-0">
+                              <i
+                                className={
+                                  Chat_Box_User_Status === props.t("Active")
+                                    ? "mdi mdi-circle text-success align-middle me-2"
+                                    : Chat_Box_User_Status === "intermediate"
+                                      ? "mdi mdi-circle text-warning align-middle me-1"
+                                      : "mdi mdi-circle align-middle me-1"
+                                }
+                              />
+                              {Chat_Box_User_Status}
+                            </p>
+                          </Col>
+                          <Col md="8" xs="3">
+                            {/* <ul className="list-inline user-chat-nav text-end mb-0">
                             <li className="list-inline-item d-none d-sm-inline-block">
                               <Dropdown
                                 isOpen={search_Menu}
@@ -457,8 +484,9 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
                               </Dropdown>
                             </li>
                           </ul> */}
-                        </Col>
-                      </Row>
+                          </Col>
+                        </Row>
+                      }
                     </div>    
                     <div>
                       <div className="chat-conversation p-3">
@@ -592,6 +620,7 @@ const chatExists = chatsArray.some(chat => chat.phoneNumber === messageData.phon
                                 addMessage(currentPhoneNumber, currentUser.name)
                               }
                               className="btn btn-primary btn-rounded chat-send w-md "
+                               disabled={!currentPhoneNumber}
                             >
                               <span className="d-none d-sm-inline-block me-2">
                                 Send

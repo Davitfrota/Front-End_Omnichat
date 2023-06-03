@@ -24,6 +24,7 @@ import {
   addMessageFail,
   addChatSuccess,
   addChatFail,
+  updateChatSuccess,
   updateChatFail
 } from "./actions";
 
@@ -89,8 +90,11 @@ function* onAddMessage({ message }) {
 function* onUpdateChat({ messageData }) {
   try {
     const response = yield call(updateChat, messageData);
+    console.log(response)
     yield put(updateChatSuccess(response));
   } catch (error) {
+    console.log(error)
+    
     yield put(updateChatFail(error));
   }
  }

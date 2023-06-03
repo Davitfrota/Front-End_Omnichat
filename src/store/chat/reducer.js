@@ -22,7 +22,8 @@ const INIT_STATE = {
   groups: [],
   contacts: [],
   messages: [],
-  error: {},
+  error: [],
+  loading: false,
 }
 
 const Calendar = (state = INIT_STATE, action) => {
@@ -31,18 +32,21 @@ const Calendar = (state = INIT_STATE, action) => {
       return {
         ...state,
         chats: action.payload,
+        loading: false,
       }
 
     case GET_CHATS_FAIL:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       }
 
     case GET_GROUPS_SUCCESS:
       return {
         ...state,
         groups: action.payload,
+        
       }
 
     case GET_GROUPS_FAIL:
@@ -67,6 +71,7 @@ const Calendar = (state = INIT_STATE, action) => {
       return {
         ...state,
         messages: action.payload,
+
       }
 
     case GET_MESSAGES_FAIL:
@@ -81,13 +86,14 @@ const Calendar = (state = INIT_STATE, action) => {
         messages: [...state.messages, action.payload],
       }
     
-    case POST_ADD_CHAT_SUCCESS:
+    case POST_ADD_CHAT_SUCCESS: {
+        response = action.payload == false ? [...state.chats] : [...state.chats, action.payload] 
       return {
         ...state,
-        chats: [...state.chats, action.payload]
+        chats: response,
 
       }
-
+    }
     case POST_ADD_CHAT_FAIL:
       return {
         ...state,
@@ -100,12 +106,20 @@ const Calendar = (state = INIT_STATE, action) => {
         error: action.payload,
       }
     
-    case PUT_UPDATE_CHAT_SUCCESS:
+    case PUT_UPDATE_CHAT_SUCCESS: { 
+       const updatedChat = action.payload
+      console.log("updatedChat " + updatedChat)
+      console.log("state.chats " + state.chats)
+      const chats = state.chats.map(chat =>
+          chat.phoneNumber === updatedChat.phoneNumber ? updatedChat : chat
+        );
       return {
+       
+      
         ...state,
-        chats: [...state.chats, action.payload]
+        chats: chats
       }
-    
+  }
     case PUT_UPDATE_CHAT_FAIL:
       return {
         ...state,
@@ -125,7 +139,7 @@ const Calendar = (state = INIT_STATE, action) => {
         error: action.payload
       };
     default:
-      return state
+      return {...state, loading: false}
   }
 }
 

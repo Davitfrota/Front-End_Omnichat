@@ -115,7 +115,7 @@ export const addMessageFail = error => ({
 
 export const addChat = chat => ({
   type: POST_ADD_CHAT,
-  chat
+  chat,
 })
 
 

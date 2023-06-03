@@ -9,7 +9,7 @@ const axiosApi = axios.create({
 export const getChats = async () => {
     try {
         const response = await axiosApi.get(`/get_all_conversations`);
-        return response.data;
+        return response.data ? response.data : [];
     } catch (error) {
         console.error("Erro ao buscar chats", error);
         throw error;
