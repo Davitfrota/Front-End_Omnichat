@@ -150,11 +150,10 @@ const Chat = props => {
   const handleMessage = (messageData) => {
     // Cria um array com todos os chats
     let chatsArray = Object.values(chats);
-    console.log('chatsArray:', chatsArray[0]);
+    
 
     const chatExists = chatsArray.some(chat => {
-      console.log('chat.phoneNumber:', chat.phoneNumber);
-      console.log('messageData.phoneNumber:', messageData.phoneNumber);
+
       return chat.phoneNumber === messageData.phoneNumber;
     });
 
@@ -174,7 +173,6 @@ const Chat = props => {
   const userChatOpen = (chat) => {
     setChat_Box_Username(chat.name);
     setChat_Box_User_Status(chat.status);
-    console.log(chat.phoneNumber)
     setCurrentPhoneNumber(chat.phoneNumber);
     if (chat.unreadMessages && chat.unreadMessages.length > 0) {
       dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: [] }))
@@ -301,7 +299,7 @@ const Chat = props => {
       <div className="error-message">
         <p className="error-message-text">An error occurred while loading chats</p>
       </div>
-      : chats.length === 0 ?
+      : chats[0] == null ?
                                 
                                   <p>Não há chats disponíveis</p>	
                                 
