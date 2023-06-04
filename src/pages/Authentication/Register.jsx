@@ -15,8 +15,8 @@ import { Link } from "react-router-dom";
 // import images
 import profileImg from "../../assets/images/registro.png";
 import logoImg from "../../assets/images/canguru-jordan.svg"
-import instagram from "../../assets/images/chat/InstagramIcone.png";
-import whatts from "../../assets/images/chat/WhatsappIcone.png";
+import instagram from "../../assets/images/chat/instagramIcon.png";
+import whatts from "../../assets/images/chat/whatsappIcon.png";
 
 const Register = props => {
   document.title = "Register";
