@@ -87,7 +87,7 @@ const Calendar = (state = INIT_STATE, action) => {
       }
     
     case POST_ADD_CHAT_SUCCESS: {
-        response = action.payload == false ? [...state.chats] : [...state.chats, action.payload] 
+        let response = action.payload == false ? [...state.chats] : [...state.chats, action.payload] 
       return {
         ...state,
         chats: response,

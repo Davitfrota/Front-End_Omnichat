@@ -58,12 +58,12 @@ function* onGetChats() {
 
 function* onAddChats({ chat }) {
   try {
-    console.log('procurando chat: chat')
     const response = yield call(addChat, chat);
     console.log(response)
     yield put(addChatSuccess(response));
     console.log("deu certo")
   } catch (error) {
+    console.log(error)
     yield put(addChatFail(error));
   }
 }
@@ -83,6 +83,7 @@ function* onAddMessage({ message }) {
     const response = yield call(addMessage, message);
     yield put(addMessageSuccess(response));
   } catch (error) {
+    console.log(error)
     yield put(addMessageFail(error));
   }
 }
