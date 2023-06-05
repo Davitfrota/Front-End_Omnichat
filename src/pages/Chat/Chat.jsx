@@ -263,25 +263,7 @@ const Chat = props => {
                           </p>
                         </div>
 
-                        {/* <div>
-                          <Dropdown
-                            isOpen={menu1}
-                            toggle={() => setMenu1(!menu1)}
-                            className="chat-noti-dropdown active"
-                          >
-                            <DropdownToggle
-                              tag="a"
-                              className="btn"
-                            >
-                              <i className="bx bx-bell bx-tada"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
-                              <DropdownItem href="#">Action</DropdownItem>
-                              <DropdownItem href="#">Another action</DropdownItem>
-                              <DropdownItem href="#">Something else</DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
-                        </div> */}
+                      
                       </div>
                     </div>
 
