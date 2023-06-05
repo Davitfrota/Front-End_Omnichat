@@ -4,8 +4,8 @@ import ProfileMenu from "../../components/CommonForBoth/TopbarDropdown/ProfileMe
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {map} from "lodash";
 import {Link} from "react-router-dom";
-import whatsappIcon from "../../assets/images/chat/whatsappIcone.png";
-import instagramIcon from "../../assets/images/chat/InstagramIcone.png";
+import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
+import instagramIcon from "../../assets/images/chat/instagramIcon.png";
 import React from "react";
 
 const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, currentPhoneNumber, messages, currentMessage,

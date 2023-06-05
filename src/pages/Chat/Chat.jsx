@@ -36,12 +36,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
 //Import Breadcrumb
-import Breadcrumbs from "/src/components/Common/Breadcrumb";
-import ProfileMenu from "/src/components/CommonForBoth/TopbarDropdown/ProfileMenu";
-
-import images from "/src/assets/images";
-import instagram from "../../assets/images/chat/InstagramIcone.png";
-import whatts from "../../assets/images/chat/WhatsappIcone.png";
 
 import {
   addMessage as onAddMessage,
