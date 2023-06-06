@@ -190,7 +190,7 @@ const Chat = props => {
       
       phoneNumber: messageData.phoneNumber,
       sender: messageData.sender,
-      message: messageData.body,
+      body: messageData.body,
       time: messageData.time,
     };
     //setcurrentMessage("");

@@ -309,7 +309,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                         <div className="conversation-name">
                                                                             {message.sender}
                                                                         </div>
-                                                                        <p>{message.message}</p>
+                                                                        <p>{message.body}</p>
                                                                         <p className="chat-time mb-0"><i
                                                                             className="bx bx-time-five align-middle me-1"></i> {message.time}
                                                                         </p>
