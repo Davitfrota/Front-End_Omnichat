@@ -1,38 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { isEmpty, map } from "lodash";
+import { isEmpty } from "lodash";
 import io from 'socket.io-client';
 import { withTranslation } from "react-i18next";
-import moment from "moment";
 import ChatContent from "./ChatContent";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-  UncontrolledDropdown,
-  UncontrolledTooltip,
-  Alert
-} from "reactstrap";
-import classnames from "classnames";
 import './Chat.css'
-//Import Scrollbar
-import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
 //Import Breadcrumb
@@ -41,17 +13,11 @@ import {
   addMessage as onAddMessage,
   addChat as onAddChat,
   getChats as onGetChats,
-  getContacts as onGetContacts,
-  getGroups as onGetGroups,
   getMessages as onGetMessages,
   updateChat as onUpdateChat,
-  receiveMessageRequest as OnReceiveMessage
 } from "/src/store/actions";
 
-//redux
 import { useSelector, useDispatch } from "react-redux";
-import { updateChat } from "../../store/chat/api";
-import { current } from "@reduxjs/toolkit";
 
 
 
@@ -64,23 +30,18 @@ const Chat = props => {
 
 
   const [messageBox, setMessageBox] = useState(null)
-  // const Chat_Box_Username2 = "Henry Wells"
   const [currentPhoneNumber, setCurrentPhoneNumber] = useState(null);
-  // eslint-disable-next-line no-unused-vars
   const [currentUser, setCurrentUser] = useState({
     name: "Davi Frota",
     isActive: true,
   });
-  const [menu1, setMenu1] = useState(false);
   const [search_Menu, setsearch_Menu] = useState(false);
   const [settings_Menu, setsettings_Menu] = useState(false);
   const [other_Menu, setother_Menu] = useState(false);
   const [activeTab, setactiveTab] = useState("1");
   const [ChatBoxUsername, setChat_Box_Username] = useState("");
-  // eslint-disable-next-line no-unused-vars
   const [Chat_Box_User_Status, setChat_Box_User_Status] = useState(false);
   const [currentMessage, setcurrentMessage] = useState("");
-  const [receivedMessage, setReceivedMessage] = useState('');
   
   const socket = io('http://localhost:8000');
   useEffect(() => {
@@ -104,15 +65,11 @@ const Chat = props => {
   }, [messages]);
 
   useEffect(() => {
-    // Substitua pelo seu servidor Socket.IO
-    // Evento para receber mensagens do servidor
     socket.on('user_message', (data) => {
-      //console.log('mensagem recebida do usuário:', data);
       handleMessage(data)
     });
 
     socket.on('dialogflow_message', (data) => {
-      //console.log('mensagem dialogflow:', data);
       handleMessage(data)
     });
     
@@ -120,11 +77,7 @@ const Chat = props => {
       socket.disconnect()
     };
   }, []);
-  // const toggleNotification = () => {
-  //   setnotification_Menu(!notification_Menu)
-  // }
 
-  //Toggle Chat Box Menus
   const toggleSearch = () => {
     setsearch_Menu(!search_Menu);
   };
@@ -156,7 +109,7 @@ const Chat = props => {
 
     if (!chatExists) {
       console.log('quantidade de chats: ' + chatsArray.length);
-      // Ajuste esta linha de acordo com a estrutura do seu estado de chat
+      // Ajuste esta linha conforme a estrutura do seu estado de chat
 
       const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, lastMessage: messageData, unreadMessages: [messageData], name: messageData.sender, status: "active" };
       dispatch(onAddChat(newChat));
@@ -166,7 +119,6 @@ const Chat = props => {
 }
 
 
-  //Use For Chat Box
   const userChatOpen = (chat) => {
     setChat_Box_Username(chat.name);
     setChat_Box_User_Status(chat.status);
@@ -179,8 +131,7 @@ const Chat = props => {
   };
 
   const addMessage = (messageData) => {
-    if (messageData.phoneNumber == 
-      currentPhoneNumber) {
+    if (messageData.phoneNumber === currentPhoneNumber) {
       setcurrentMessage(messageData.body);
      }
     else {
@@ -193,12 +144,12 @@ const Chat = props => {
       body: messageData.body,
       time: messageData.time,
     };
-    //setcurrentMessage("");
     try {
       dispatch(onAddMessage(message));
       return message;
-    } catch (err) { }
+    } catch (err) {
       console.log(err);
+    }
   };
 
   const scrollToBottom = () => {
@@ -218,9 +169,8 @@ const Chat = props => {
     }
   };
 
-  //serach recent user
   const searchUsers = () => {
-    var input, filter, ul, li, a, i, txtValue;
+    let input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("search-user");
     filter = input.value.toUpperCase();
     ul = document.getElementById("recent-list");
