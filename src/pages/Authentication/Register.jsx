@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 // import images
 import profileImg from "../../assets/images/registro.png";
 import logoImg from "../../assets/images/canguru-jordan.svg"
-import instagram from "../../assets/images/chat/instagramIcon.png";
+import menssager from "../../assets/images/chat/MenssagerIcon.png";
 import whatts from "../../assets/images/chat/whatsappIcon.png";
 
 const Register = props => {
@@ -178,13 +178,13 @@ const Register = props => {
                         ) : null}
                       </div>
                       <div className="mb-3">
-                        <Label className="form-label">Instagram</Label>
-                        <img className="img-register" src={instagram}/>
+                        <Label className="form-label">Menssager</Label>
+                        <img className="img-register-menssager" src={menssager}/>
                         <Input
                           id="email"
                           name="email"
                           className="form-control"
-                          placeholder="Email do instagram"
+                          placeholder="Email do Menssager"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
@@ -198,8 +198,8 @@ const Register = props => {
                         ) : null}
                       </div>
                       <div className="mb-3">
-                        <Label className="form-label">Senha do Instagram</Label>
-                        <img className="img-register" src={instagram}/>
+                        <Label className="form-label">Senha do Menssager</Label>
+                        <img className="img-register-menssager" src={menssager}/>
                         <Input
                           name="password"
                           type="password"

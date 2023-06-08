@@ -20,9 +20,8 @@ const Authmiddleware = ({
       }
 
       return (
-          
           <Component {...props} />
-        
+
       )
     }}
   />

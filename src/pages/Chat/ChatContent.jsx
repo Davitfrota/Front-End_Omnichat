@@ -5,7 +5,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import {map} from "lodash";
 import {Link} from "react-router-dom";
 import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
-import instagramIcon from "../../assets/images/chat/instagramIcon.png";
+import instagramIcon from "../../assets/images/chat/MenssagerIcon.png";
 import React from "react";
 
 const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, currentPhoneNumber, messages, currentMessage,
@@ -262,7 +262,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                         <div className="chat-conversation p-3">
                                             <ul className="list-unstyled">
                                                 <PerfectScrollbar
-                                                    style={{height: "470px"}}
+                                                    style={{height: "70vh"}}
                                                     containerRef={ref => setMessageBox(ref)}
                                                 >
 

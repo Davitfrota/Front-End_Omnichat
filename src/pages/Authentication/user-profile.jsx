@@ -27,7 +27,7 @@ import { withRouter } from "react-router-dom";
 import Breadcrumb from "../../components/Common/Breadcrumb";
 
 import avatar from "../../assets/images/users/Icone_Usuario.png";
-import instagram from "../../assets/images/chat/instagramIcon.png";
+import Menssager from "../../assets/images/chat/MenssagerIcon.png";
 import whatts from "../../assets/images/chat/whatsappIcon.png";
 import voltar from "../../assets/images/chat/return.png";
 
@@ -182,8 +182,8 @@ const UserProfile = (props) => {
                 </div>
                 <div style={{display:'flex', flexDirection:'row'}}>
                   <div className="form-profile">
-                    <Label className="form-label">Email do instagram</Label>
-                    <img className="img-register" src={instagram}/>
+                    <Label className="form-label">Email do Menssager</Label>
+                    <img className="img-register-menssager" src={Menssager}/>
                     <Input
                      name="email"
                      className="form-control"
@@ -202,8 +202,8 @@ const UserProfile = (props) => {
                     <Input name="idx" value={idx} type="hidden" />
                   </div>
                   <div className="form-profile">
-                    <Label className="form-label">Senha do instagram</Label>
-                    <img className="img-register" src={instagram}/>
+                    <Label className="form-label">Senha do Menssager</Label>
+                    <img className="img-register-menssager" src={Menssager}/>
                     <Input
                       name="password"
                       className="form-control"
