@@ -120,7 +120,7 @@ const SidebarContent = props => {
               </ul>
             </li> */}
 
-            <li className="menu-title">{props.t("Apps")}</li>
+            <li className="menu-title"></li>
 
             {/* <li>
               <Link to="/calendar" className=" ">

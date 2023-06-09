@@ -9,7 +9,11 @@ import SidebarContent from "./SidebarContent";
 
 import { Link } from "react-router-dom";
 
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/logo-light.png";
+import logoSm from "../../assets/images/logo-light.svg";
+import logoDarkSm from "../../assets/images/logo.svg";
+import logoDark from "../../assets/images/logo-dark.png";
+
 const Sidebar = props => {
 
   return (
@@ -17,17 +21,20 @@ const Sidebar = props => {
       <div className="vertical-menu">
         <div className="navbar-brand-box">
           <Link to="/" className="logo logo-dark">
+          <span className="logo-sm">
+              <img src={logoDarkSm} alt="" height="30" />
+            </span>
             <span className="logo-lg">
-              <img src={logoLightSvg} alt="" height="14" />
-            </span> 
-            <span className="logo-lg">
-              <img src={logoDark} alt="" height="22" />
+              <img src={logoDark} alt="" height="80" />
             </span>
           </Link>
 
           <Link to="/" className="logo logo-light">
+          <span className="logo-sm">
+              <img src={logoSm} alt="" height="30" />
+            </span>
             <span className="logo-lg">
-              <img src={logoLightPng} alt="" height="22" />
+              <img src={logo} alt="" height="80" />
             </span>
           </Link>
         </div>

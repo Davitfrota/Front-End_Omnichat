@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
+import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label, Button } from "reactstrap";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -139,12 +139,13 @@ const Login = props => {
                       </div>
 
                       <div className="mt-3 d-grid">
-                        <button
-                          className="btn btn-primary btn-block"
+                        <Button
+                          color="primary"
+                          className="btn-auth"
                           type="submit"
                         >
                           Logar
-                        </button>
+                        </Button>
                       </div>
                     </Form>
                   </div>

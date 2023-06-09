@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
+import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback, Button } from "reactstrap";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -15,8 +15,9 @@ import { Link } from "react-router-dom";
 // import images
 import profileImg from "../../assets/images/registro.png";
 import logoImg from "../../assets/images/canguru-jordan.svg"
-import instagram from "../../assets/images/chat/instagramIcon.png";
+import menssager from "../../assets/images/chat/MenssagerIcon.png";
 import whatts from "../../assets/images/chat/whatsappIcon.png";
+
 
 const Register = props => {
   document.title = "Register";
@@ -178,13 +179,13 @@ const Register = props => {
                         ) : null}
                       </div>
                       <div className="mb-3">
-                        <Label className="form-label">Instagram</Label>
-                        <img className="img-register" src={instagram}/>
+                        <Label className="form-label">Menssager</Label>
+                        <img className="img-register-menssager" src={menssager}/>
                         <Input
                           id="email"
                           name="email"
                           className="form-control"
-                          placeholder="Email do instagram"
+                          placeholder="Email do Menssager"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
@@ -198,8 +199,8 @@ const Register = props => {
                         ) : null}
                       </div>
                       <div className="mb-3">
-                        <Label className="form-label">Senha do Instagram</Label>
-                        <img className="img-register" src={instagram}/>
+                        <Label className="form-label">Senha do Menssager</Label>
+                        <img className="img-register-menssager" src={menssager}/>
                         <Input
                           name="password"
                           type="password"
@@ -216,13 +217,14 @@ const Register = props => {
                         ) : null}
                       </div>
 
-                      <div className="mt-4">
-                        <button
-                          className="btn btn-primary btn-block "
+                      <div className="mt-3 d-grid">
+                        <Button
+                          color="primary"
+                          className="btn-auth"
                           type="submit"
                         >
                           Registrar
-                        </button>
+                        </Button>
                       </div>
 
                       <div className="mt-4 text-center">

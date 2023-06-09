@@ -250,7 +250,7 @@ const RightSidebar = props => {
                       }}
                     />
                     <label className="me-1" htmlFor="sidebarDefault">{props.t("Default")}</label>
-                    <input
+                    {/* <input
                       type="radio"
                       id="sidebarCompact"
                       name="sidebarType"
@@ -262,7 +262,7 @@ const RightSidebar = props => {
                         }
                       }}
                     />
-                    <label className="me-1" htmlFor="sidebarCompact">{props.t("Compact")}</label>
+                    <label className="me-1" htmlFor="sidebarCompact">{props.t("Compact")}</label> */}
                     <input
                       type="radio"
                       id="sidebarIcon"
@@ -548,27 +548,7 @@ const RightSidebar = props => {
                 </React.Fragment>
               ) : null}
 
-              <FormGroup>
-                <span className="mb-2 d-block" id="radio-title">
-                  Preloader
-                </span>
-
-                <div className="form-check form-switch">
-                  <input
-                    type="checkbox"
-                    className="form-check-input checkbox"
-                    id="checkbox_1"
-                    checked={props.isPreloader}
-                    onChange={() => {
-                      props.changePreloader(!props.isPreloader);
-                    }}
-                  />
-
-                  <label className="form-check-label" htmlFor="checkbox_1">
-                    Preloader
-                  </label>
-                </div>
-              </FormGroup>
+         
             </div>
           </div>
         </SimpleBar>
