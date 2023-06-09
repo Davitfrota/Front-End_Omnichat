@@ -92,11 +92,7 @@ const UserProfile = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <Button className="btn-auth" color="transparent">
-            <a href='/chat'>
-              <img style={{width:'30px'}} src={voltar}/>
-            </a>
-          </Button>
+          
           <Breadcrumb title="Omnichat" breadcrumbItem={props.t("Profile")} />
 
           <Row>
@@ -127,7 +123,7 @@ const UserProfile = (props) => {
             </Col>
           </Row>
 
-          <h4 className="card-title mb-4">Altere seus dados</h4>
+          <h4 className="card-title mb-4">{props.t("ChangeYourData")}</h4>
 
           <Card>
             <CardBody>
@@ -162,12 +158,12 @@ const UserProfile = (props) => {
                     <Input name="idx" value={idx} type="hidden" />
                   </div>
                   <div className="form-profile">
-                    <Label className="form-label">Número do Whatsaap</Label>
+                    <Label className="form-label">{props.t("WhatsappNumber")}</Label>
                     <img className="img-register" src={whatts}/>
                     <Input
                       name="number"
                       className="form-control"
-                      placeholder='Número'
+                      placeholder={props.t("WhatsappNumber")}
                       type="text"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
@@ -184,12 +180,12 @@ const UserProfile = (props) => {
                 </div>
                 <div style={{display:'flex', flexDirection:'row'}}>
                   <div className="form-profile">
-                    <Label className="form-label">Email do Menssager</Label>
+                    <Label className="form-label">{props.t("EmailMenssager")}</Label>
                     <img className="img-register-menssager" src={Menssager}/>
                     <Input
                      name="email"
                      className="form-control"
-                     placeholder="Email"
+                     placeholder={props.t("EmailMenssager")}
                      type="email"
                      onChange={validation.handleChange}
                      onBlur={validation.handleBlur}
@@ -204,12 +200,12 @@ const UserProfile = (props) => {
                     <Input name="idx" value={idx} type="hidden" />
                   </div>
                   <div className="form-profile">
-                    <Label className="form-label">Senha do Menssager</Label>
+                    <Label className="form-label">{props.t("PasswordMenssager")}</Label>
                     <img className="img-register-menssager" src={Menssager}/>
                     <Input
                       name="password"
                       className="form-control"
-                      placeholder={props.t("Username...")}
+                      placeholder={props.t("PasswordMenssager")}
                       type="text"
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
@@ -220,7 +216,7 @@ const UserProfile = (props) => {
                 </div>
                 <div className="text-center mt-4">
                   <Button className="btn-auth" type="submit" color="danger">
-                    Atualizar
+                    {props.t("SaveChanges")}
                   </Button>
                 </div>
               </Form>
