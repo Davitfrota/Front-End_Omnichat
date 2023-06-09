@@ -11,10 +11,10 @@ import React from "react";
 const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, currentPhoneNumber, messages, currentMessage,
                          onKeyPress, setMessageBox,currentUser, userChatOpen, ...props}) => {
     return (<React.Fragment>
-        <div className="container">
+        <div className="page-content">
             <Container fluid>
                 {/* Render Breadcrumb */}
-                <div style={{marginTop: '20px'}}>
+                <div>
                     <Breadcrumbs title="Omnichat" breadcrumbItem={props.t("Chat")}/>
                 </div>
                 <Row>
@@ -262,7 +262,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                         <div className="chat-conversation p-3">
                                             <ul className="list-unstyled">
                                                 <PerfectScrollbar
-                                                    style={{height: "70vh"}}
+                                                    style={{height: "55vh"}}
                                                     containerRef={ref => setMessageBox(ref)}
                                                 >
 
@@ -391,11 +391,11 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                         onClick={() =>
                                                             addMessage(currentPhoneNumber, currentUser.name)
                                                         }
-                                                        className="btn btn-primary btn-rounded chat-send w-md "
+                                                        className="btn1"
                                                     >
-                              <span className="d-none d-sm-inline-block me-2">
-                                Send
-                              </span>{" "}
+                                                    <span className="d-none d-sm-inline-block me-2">
+                                                      Send
+                                                    </span>{" "}
                                                         <i className="mdi mdi-send"/>
                                                     </Button>
                                                 </Col>

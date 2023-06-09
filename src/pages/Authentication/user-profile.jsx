@@ -92,9 +92,11 @@ const UserProfile = (props) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <a href='/chat'>
-            <img style={{width:'30px'}} src={voltar}/>
-          </a>
+          <Button className="btn-auth" color="transparent">
+            <a href='/chat'>
+              <img style={{width:'30px'}} src={voltar}/>
+            </a>
+          </Button>
           <Breadcrumb title="Omnichat" breadcrumbItem={props.t("Profile")} />
 
           <Row>
@@ -217,7 +219,7 @@ const UserProfile = (props) => {
                   </div>
                 </div>
                 <div className="text-center mt-4">
-                  <Button type="submit" color="danger">
+                  <Button className="btn-auth" type="submit" color="danger">
                     Atualizar
                   </Button>
                 </div>

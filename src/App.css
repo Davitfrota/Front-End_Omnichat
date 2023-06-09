@@ -37,7 +37,3 @@
     transform: rotate(360deg);
   }
 }
-
-button {
-  font-size: calc(10px + 2vmin);
-}

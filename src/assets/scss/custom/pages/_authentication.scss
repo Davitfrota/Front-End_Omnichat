@@ -25,6 +25,45 @@
     margin-left: 5px;
   }
 
+  
+.btn-auth {
+    position: relative;
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .btn-auth::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    width: 150%;
+    height: 150%;
+    background-color: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    z-index: -1;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .btn-auth:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-auth:hover::before {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    opacity: 1;
+  }
+  
+
 .form-profile{
     width: 50%;
     margin: 10px;

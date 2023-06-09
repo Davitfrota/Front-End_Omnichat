@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
+import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback, Button } from "reactstrap";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -17,6 +17,7 @@ import profileImg from "../../assets/images/registro.png";
 import logoImg from "../../assets/images/canguru-jordan.svg"
 import menssager from "../../assets/images/chat/MenssagerIcon.png";
 import whatts from "../../assets/images/chat/whatsappIcon.png";
+
 
 const Register = props => {
   document.title = "Register";
@@ -216,13 +217,14 @@ const Register = props => {
                         ) : null}
                       </div>
 
-                      <div className="mt-4">
-                        <button
-                          className="btn btn-primary btn-block "
+                      <div className="mt-3 d-grid">
+                        <Button
+                          color="primary"
+                          className="btn-auth"
                           type="submit"
                         >
                           Registrar
-                        </button>
+                        </Button>
                       </div>
 
                       <div className="mt-4 text-center">
