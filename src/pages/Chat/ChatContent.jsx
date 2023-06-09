@@ -120,7 +120,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                             <div
                                                                                 className="flex-grow-1 overflow-hidden">
                                                                                 <h5 className="text-truncate font-size-14 mb-1">
-                                                                                    {chat.name}
+                                                                                            {chat.name} {chat.phoneNummber} 
                                                                                 </h5>
 
                                                                                 {chat.lastMessage &&
@@ -307,7 +307,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                     </UncontrolledDropdown> */}
                                                                     <div className="ctext-wrap">
                                                                         <div className="conversation-name">
-                                                                            {message.sender}
+                                                                  {message.sender} 
                                                                         </div>
                                                                         <p>{message.body}</p>
                                                                         <p className="chat-time mb-0"><i
@@ -387,7 +387,8 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                 <Col className="col-auto">
                                                     <Button
                                                         type="button"
-                                                        color="primary"
+                              color="primary"
+                              disabled={!currentPhoneNumber}
                                                         onClick={() =>
                                                             addMessage(currentPhoneNumber, currentUser.name)
                                                         }
