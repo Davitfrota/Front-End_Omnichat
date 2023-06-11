@@ -396,6 +396,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                     >
                                                     <span className="d-none d-sm-inline-block me-2">
                                                       Send
+
                                                     </span>{" "}
                                                         <i className="mdi mdi-send"/>
                                                     </Button>

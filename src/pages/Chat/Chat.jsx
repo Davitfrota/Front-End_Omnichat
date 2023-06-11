@@ -43,7 +43,7 @@ const Chat = props => {
   const [Chat_Box_User_Status, setChat_Box_User_Status] = useState(false);
   const [currentMessage, setcurrentMessage] = useState("");
   
-  const socket = io('http://localhost:8000');
+  const socket = io('https://twilliopizza.mateusb121.repl.co');
   useEffect(() => {
     dispatch(onGetChats());
     

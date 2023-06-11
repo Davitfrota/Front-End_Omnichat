@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'https://twilliopizza.mateusb121.repl.co'
 
 const axiosApi = axios.create({
     baseURL: API_URL,
