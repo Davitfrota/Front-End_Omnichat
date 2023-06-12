@@ -1,0 +1,75 @@
+.platform-icon {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .platform-icon:hover .communication-popup {
+    display: block;
+  }
+
+  .communication-popup {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    padding: 8px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .observation-field {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .down{
+    animation: slideInFromDown 1s ease-in-out;
+  }
+  .right {
+    animation: slideInFromRight 1s ease-in-out;}
+
+  .width{
+    width: 100%;
+  }
+
+  .map_icon{
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .fade-out {
+    animation: fadeOut 1.2s ease-in-out;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+  @keyframes slideInFromDown {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

@@ -199,6 +199,9 @@
     .left{
         animation: slideInFromLeft 1s ease-in-out;
     }
+    .down{
+        animation: slideInFromDown 1s ease-in-out;
+    }
 
     .last-chat {
         .conversation-list {

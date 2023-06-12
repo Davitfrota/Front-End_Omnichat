@@ -1,6 +1,10 @@
 {
   "Active": "Online",
   "Chat": "Conversas",
+  "OrderScreen": "Pedidos",
+  "Delivered": "Entregue",
+  "Preparation": "Em preparação",
+  "Ready": "Pronto",
   "Groups": "Grupos",
   "Contacts": "Contatos",
   "Today": "Hoje",
