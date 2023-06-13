@@ -6,6 +6,8 @@ import { withTranslation } from "react-i18next";
 import ChatContent from "./ChatContent";
 import './Chat.css'
 import "react-perfect-scrollbar/dist/css/styles.css";
+import { toast,  ToastContainer  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Alert
 } from "reactstrap";
@@ -20,8 +22,6 @@ import {
 } from "/src/store/actions";
 
 import { useSelector, useDispatch } from "react-redux";
-
-
 
 const Chat = props => {
 
@@ -44,6 +44,8 @@ const Chat = props => {
   const [ChatBoxUsername, setChat_Box_Username] = useState("");
   const [Chat_Box_User_Status, setChat_Box_User_Status] = useState(false);
   const [currentMessage, setcurrentMessage] = useState("");
+  const [isToastActive, setIsToastActive] = useState(false);
+
   
   const socket = io('https://twilliopizza.mateusb121.repl.co');
   useEffect(() => {
@@ -101,6 +103,26 @@ const Chat = props => {
       setactiveTab(tab);
     }
   };
+
+  const displayErrorToast = (message) => {
+    if (!isToastActive) {
+      setIsToastActive(true);
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        onClose: () => setIsToastActive(false) // Atualiza o estado quando o toast é fechado
+      });
+    }
+  };
+
+  if (error && error.message) {
+    displayErrorToast(error.message);
+  }
 
   const handleMessage = (messageData) => {
     // Cria um array com todos os chats
@@ -195,18 +217,17 @@ const Chat = props => {
     }
   };
 
+
   return (
-    <div className="page-content">
-      {error.message &&
-        <Alert color="danger"> {error.message} </Alert> 
-      }
-    <ChatContent activeTab={activeTab} chats={chats} chatBoxUsername={ChatBoxUsername}
-      currentPhoneNumber={currentPhoneNumber}
-      currentUser={currentUser} 
-                     Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
-                     onKeyPress={onKeyPress} setMessageBox={setMessageBox} userChatOpen={userChatOpen}
-  {...props } />
-  </div>
+    <div>
+      <ToastContainer/>
+      <ChatContent activeTab={activeTab} chats={chats} chatBoxUsername={ChatBoxUsername}
+        currentPhoneNumber={currentPhoneNumber}
+        currentUser={currentUser} 
+                      Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
+                      onKeyPress={onKeyPress} setMessageBox={setMessageBox} userChatOpen={userChatOpen}
+    {...props } />
+    </div>
   );
 };
 

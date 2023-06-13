@@ -27,12 +27,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 
       const handleCopy = (address) => {
         navigator.clipboard.writeText(address)
-          .then(() => {
-            console.log('Texto copiado com sucesso!');
-          })
-          .catch((error) => {
-            console.error('Erro ao copiar texto:', error);
-          });
       };
 
       const handleDeleteOrder = (orderId) => {
