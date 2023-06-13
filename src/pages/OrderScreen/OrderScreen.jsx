@@ -1,13 +1,14 @@
 import React,{useState} from 'react';
 import { Button, Container } from "reactstrap";
 import './OrderScreen.css'
+import { toast,  ToastContainer  } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import PlatformIcon from './PopUpIcon';
-import Confirmation from './PopUpConfirmation';
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 
@@ -40,7 +41,29 @@ import PerfectScrollbar from "react-perfect-scrollbar";
         setTimeout(() => {
           setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
           setDeletingOrderId(null);
-        }, 1000);
+        }, 900);
+      };
+
+      const handleDelete = (id) => {
+        toast.warn(
+          <div>
+            <h5>Deseja realmente encerrar o pedido de n° {id} ? </h5>
+            <div style={{display: 'flex', flexDirection:'row',width:'100%'}}>
+              <button style={{width:'50%'}} onClick={() => handleDeleteOrder(id)} className='btn'>Confirmar</button>
+              <button style={{width:'50%'}} onClick={toast.dismiss} className='btn'>Cancelar</button>
+            </div>
+          </div>,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            }
+        );
       };
 
       const [orders, setOrders] = useState([
@@ -108,7 +131,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
                             {orders.map(order => (
                                 <div key={order.id} style={styles.card} className={`order-item ${deletingOrderId === order.id ? 'up' : ''}`}>
                                   <div style={styles.container_between}>
-                                    <h3 style={styles.customer}>{order.customer}</h3>
+                                    <h3 style={styles.customer}>{order.id}: {order.customer}</h3>
                                     <PlatformIcon platform={order.platform} communication={order.communication} />
                                   </div>
                                     <p style={styles.pizza}>{order.pizza}</p>
@@ -127,11 +150,12 @@ import PerfectScrollbar from "react-perfect-scrollbar";
                                     </select>
                                         <i className="bx bx-map map_icon" onClick={() => handleCopy(order.address)}></i>
                                     </div>
-                                    <Button color='danger' className='mt-3 d-grid width' onClick={() => handleDeleteOrder(order.id)}>
+                                    <Button color='danger' className='mt-3 d-grid width btn' onClick={() => handleDelete(order.id)}>
                                         Encerrar atendimento
-                                    </Button>                                  
+                                    </Button>          
                                 </div>
                             ))}
+                            <ToastContainer/>
                         </div>
                     </Container>
                 </div>
