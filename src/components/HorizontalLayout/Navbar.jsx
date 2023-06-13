@@ -253,9 +253,16 @@ const Navbar = props => {
                     <Link to="/calendar" className="dropdown-item">
                       {props.t("Calendar")}
                     </Link> */}
-                    <Link to="/chat" className="dropdown-item">
-                      {props.t("Chat")}
-                    </Link>
+                    <li>
+                      <Link to="/chat" className="dropdown-item">
+                        {props.t("Chat")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/requests" className="dropdown-item">
+                        <span>{props.t("OrderScreen")}</span>
+                      </Link>
+                    </li>
                     {/* <Link to="/apps-filemanager" className="dropdown-item">
                       {props.t("File Manager")}
                     </Link>

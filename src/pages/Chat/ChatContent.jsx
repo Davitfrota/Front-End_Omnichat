@@ -86,7 +86,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                            userChatOpen(chat);
                                                                         }}
                                                                     >
-                                                                        <div className="d-flex">
+                                                                        <div className="d-flex down">
                                                                             <div className="align-self-center me-3">
                                                                                 <i
                                                                                     className={
@@ -101,10 +101,10 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                             {chat.isImg ?
                                                                                 <div
                                                                                     className="avatar-xs align-self-center me-3">
-                                            <span
-                                                className="avatar-title rounded-circle bg-primary bg-soft text-primary">
-                                              {chat.profile}
-                                            </span>
+                                                                                  <span
+                                                                                      className="avatar-title rounded-circle bg-primary bg-soft text-primary">
+                                                                                    {chat.profile}
+                                                                                  </span>
                                                                                 </div>
                                                                                 :
                                                                                 <div
@@ -132,11 +132,11 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                             </div>
                                                                             <div className="flex overflow-hidden">
                                                                                 {chat.lastMessage &&
-                                            <div className="font-size-11">
-                                            
-                                              {chat.lastMessage.time}
-                                            </div>
-                                          }
+                                                                            <div className="font-size-11">
+                                                                            
+                                                                              {chat.lastMessage.time}
+                                                                            </div>
+                                                                          }
                                                                                 {chat.unreadMessages && chat.unreadMessages.length > 0 &&
                                                                                     <div
                                                                                         className="unread-message-count">
@@ -279,6 +279,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                     message.sender === currentUser.name || message.sender === 'ChatBot'
                                                                         ? "right"
                                                                         : "left"
+                                                                          
                                                                 }
                                                             >
                                                                 <div className="conversation-list">

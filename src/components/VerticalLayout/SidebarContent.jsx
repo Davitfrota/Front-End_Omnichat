@@ -135,6 +135,13 @@ const SidebarContent = props => {
                 <span>{props.t("Chat")}</span>
               </Link>
             </li>
+
+            <li>
+              <Link to="/requests">
+                 <i className="bx bx-receipt"></i>
+                <span>{props.t("OrderScreen")}</span>
+              </Link>
+            </li>
             {/* <li>
               <Link to="/apps-filemanager" >
                 <i className="bx bx-file"></i>

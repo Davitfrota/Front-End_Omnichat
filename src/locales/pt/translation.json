@@ -1,6 +1,12 @@
 {
   "Active": "Online",
   "Chat": "Conversas",
+  "OrderScreen": "Pedidos",
+  "Delivered": "Entregue",
+  "Preparation": "Em preparação",
+  "Ready": "Pronto para entrega",
+  "EnRoute": "A caminho",
+  "EndService": "Encerrar atendimento",
   "Groups": "Grupos",
   "Contacts": "Contatos",
   "Today": "Hoje",
