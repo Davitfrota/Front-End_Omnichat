@@ -259,8 +259,7 @@ const Navbar = props => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/requests">
-                        <i className="bx bx-store"></i>
+                      <Link to="/requests" className="dropdown-item">
                         <span>{props.t("OrderScreen")}</span>
                       </Link>
                     </li>

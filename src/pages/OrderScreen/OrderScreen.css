@@ -7,6 +7,7 @@
   .platform-icon:hover .communication-popup {
     display: block;
   }
+  
 
   .communication-popup {
     position: absolute;
@@ -38,6 +39,9 @@
   .down{
     animation: slideInFromDown 1s ease-in-out;
   }
+  .up{
+    animation: slideInFromUp 1s ease-in-out;
+  }
   .right {
     animation: slideInFromRight 1s ease-in-out;}
 
@@ -52,7 +56,45 @@
   .fade-out {
     animation: fadeOut 1.2s ease-in-out;
   }
+  .select{
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+
+  .selected-entregue {
+    background-color: green;
+    border: #ccc 1px  transparent;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
   
+  .selected-em  {
+    background-color: orange;
+    border: #ccc 1px solid transparent;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .selected-pronto  {
+    background-color: yellow;
+    border: #ccc 1px solid transparent;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .selected-a  {
+    background-color: yellow;
+    border: #ccc 1px solid  transparent;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+
   @keyframes fadeOut {
     from {
       opacity: 1;
@@ -71,5 +113,15 @@
     100% {
       transform: translateY(0);
       opacity: 1;
+    }
+  }
+  @keyframes slideInFromUp { 
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
     }
   }

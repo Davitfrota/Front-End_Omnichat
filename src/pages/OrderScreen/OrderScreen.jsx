@@ -7,24 +7,21 @@ import { useTranslation } from 'react-i18next';
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import PlatformIcon from './PopUpIcon';
+import Confirmation from './PopUpConfirmation';
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 
-import Whatsapp from "../../assets/images/chat/whatsappIcon.png";
-import Messenger from "../../assets/images/chat/MenssagerIcon.png";
 
     const OrderScreen = () => {
       const { t } = useTranslation();
-      const [showPopup, setShowPopup] = useState(false);
       const [deletingOrderId, setDeletingOrderId] = useState(null);
+      const [selectedOptions, setSelectedOptions] = useState({});
 
-
-      const handleMouseEnter = () => {
-        setShowPopup(true);
-      };
-
-      const handleMouseLeave = () => {
-        setShowPopup(false);
+      const handleSelectChange = (event, id) => {
+        setSelectedOptions({
+          ...selectedOptions,
+          [id]: event.target.value
+        });
       };
 
       const handleCopy = (address) => {
@@ -106,10 +103,10 @@ import Messenger from "../../assets/images/chat/MenssagerIcon.png";
         return (
                 <div className="page-content">
                     <Container fluid={true}>
-                        <Breadcrumbs title={t("OrderScreen")} breadcrumbItem={t("OrderScreen")} />
+                        <Breadcrumbs title='Omnichat' breadcrumbItem={t("OrderScreen")} />
                         <div style={styles.container} className='right'>
                             {orders.map(order => (
-                                <div key={order.id} style={styles.card} className={`order-item ${deletingOrderId === order.id ? 'fade-out' : ''}`}>
+                                <div key={order.id} style={styles.card} className={`order-item ${deletingOrderId === order.id ? 'up' : ''}`}>
                                   <div style={styles.container_between}>
                                     <h3 style={styles.customer}>{order.customer}</h3>
                                     <PlatformIcon platform={order.platform} communication={order.communication} />
@@ -117,18 +114,18 @@ import Messenger from "../../assets/images/chat/MenssagerIcon.png";
                                     <p style={styles.pizza}>{order.pizza}</p>
                                     <p className="observation-field">{order.observation}</p>
                                     <div style={styles.container_between}>
-                                        <span
-                                            className={
-                                                    order.status === t("Delivered")
-                                                        ? "mdi mdi-circle text-success font-size-14"
-                                                        : order.status === t("Preparation")
-                                                            ? "mdi mdi-circle text-danger font-size-14"
-                                                            : "mdi mdi-circle text-warning font-size-14"
-                                                                                    }
-                                        >
-                                          {t(order.status)}
-                                        </span>
-                                        <i className="bx bx-map map_icon" onClick={handleCopy(order.address)}></i>
+                                    <select 
+                                        value={selectedOptions[order.id] || ''}
+                                        onChange={(event) => handleSelectChange(event, order.id)}
+                                        className={selectedOptions[order.id] ? `selected-${selectedOptions[order.id].toLowerCase()}` : 'select'}
+                                      >
+                                        <option value="">Selecione</option>
+                                        <option value="Em preparação">Em preparação</option>
+                                        <option value="Pronto para entrega">Pronto para entrega</option>
+                                        <option value="A caminho">A caminho</option>
+                                        <option value="Entregue" >Entregue </option>
+                                    </select>
+                                        <i className="bx bx-map map_icon" onClick={() => handleCopy(order.address)}></i>
                                     </div>
                                     <Button color='danger' className='mt-3 d-grid width' onClick={() => handleDeleteOrder(order.id)}>
                                         Encerrar atendimento
@@ -145,6 +142,8 @@ import Messenger from "../../assets/images/chat/MenssagerIcon.png";
             container: {
               display: 'flex',
               flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'start',
               overflowX: 'auto',
               padding: '20px',
             },
@@ -152,6 +151,7 @@ import Messenger from "../../assets/images/chat/MenssagerIcon.png";
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'space-between',
+              alignItems: 'center',
             },
             card: {
               backgroundColor: '#fff',
