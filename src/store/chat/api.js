@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000'
+const API_URL = 'https://twilliopizza.mateusb121.repl.co'
 
 const axiosApi = axios.create({
     baseURL: API_URL,
@@ -11,7 +11,7 @@ export const getChats = async () => {
         const response = await axiosApi.get(`/get_all_conversations`);
         return response.data ? response.data : [];
     } catch (error) {
-        console.error("Erro ao buscar chats", error);
+        error.message = "Erro na comunicação com o servidor ao obter chats";
         throw error;
     }
 }
@@ -36,7 +36,7 @@ export const updateChat = async (chatData) => {
         const response = await axiosApi.put(`/update_conversation`, chatData);
         return response.data;
     } catch (error) {
-        console.error("Erro ao atualizar chat", error);
+        error.message = "Erro na comunicação com o servidor ao atualizar chats";
         throw error;
     }
 }
