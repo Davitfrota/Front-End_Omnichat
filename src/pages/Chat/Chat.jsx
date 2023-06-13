@@ -6,7 +6,9 @@ import { withTranslation } from "react-i18next";
 import ChatContent from "./ChatContent";
 import './Chat.css'
 import "react-perfect-scrollbar/dist/css/styles.css";
-
+import {
+  Alert
+} from "reactstrap";
 //Import Breadcrumb
 
 import {
@@ -51,7 +53,7 @@ const Chat = props => {
     currentPhoneNumber]);
 
   
-  const { chats, groups, contacts, messages, loading, error } = useSelector(state => ({
+  const {chats: unorderedChats, groups, contacts, messages, loading, error } = useSelector(state => ({
     chats: state.chat.chats,
     groups: state.chat.groups,
     contacts: state.chat.contacts,
@@ -59,7 +61,11 @@ const Chat = props => {
     loading: state.chat.loading,
     error: state.chat.error
   }));
-  
+
+  const chats = React.useMemo(() => {
+  return [...unorderedChats].sort((a, b) => new Date(b.lastMessage.sentAt) - new Date(a.lastMessage.sentAt));
+}, [unorderedChats]);
+
   useEffect(() => {
     if (!isEmpty(messages)) scrollToBottom();
   }, [messages]);
@@ -98,25 +104,28 @@ const Chat = props => {
 
   const handleMessage = (messageData) => {
     // Cria um array com todos os chats
+   
+      
     let chatsArray = Object.values(chats);
-    console.log('chatsArray:', chatsArray[0]);
-
+    console.log('messageData:', messageData);
     const chatExists = chatsArray.some(chat => {
       console.log('chat.phoneNumber:', chat.phoneNumber);
       console.log('messageData.phoneNumber:', messageData.phoneNumber);
       return chat.phoneNumber === messageData.phoneNumber;
     });
-
+    
     if (!chatExists) {
       console.log('quantidade de chats: ' + chatsArray.length);
       // Ajuste esta linha conforme a estrutura do seu estado de chat
 
       const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, lastMessage: messageData, unreadMessages: [messageData], name: messageData.sender, status: "active" };
+      
       dispatch(onAddChat(newChat));
     }
 
     addMessage(messageData);
-}
+    }
+    
 
 
   const userChatOpen = (chat) => {
@@ -187,12 +196,17 @@ const Chat = props => {
   };
 
   return (
+    <div className="page-content">
+      {error.message &&
+        <Alert color="danger"> {error.message} </Alert> 
+      }
     <ChatContent activeTab={activeTab} chats={chats} chatBoxUsername={ChatBoxUsername}
       currentPhoneNumber={currentPhoneNumber}
       currentUser={currentUser} 
                      Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
                      onKeyPress={onKeyPress} setMessageBox={setMessageBox} userChatOpen={userChatOpen}
-                     {...props} />
+  {...props } />
+  </div>
   );
 };
 

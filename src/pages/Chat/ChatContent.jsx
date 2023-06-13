@@ -69,7 +69,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                     </div>
                                                     : chats.length === 0 ?
                                                                                 
-                                                                                <p>Não há chats disponíveis</p>	
+                                                                                <p>{props.t("NoChats")}</p>	
                                                                                 
                                                                                 :map(chats, chat => (
                                                                 <li
@@ -278,7 +278,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                 className={
                                                                     message.sender === currentUser.name || message.sender === 'ChatBot'
                                                                         ? "right"
-                                                                        : ""
+                                                                        : "left"
                                                                 }
                                                             >
                                                                 <div className="conversation-list">
@@ -395,8 +395,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                         className="btn1"
                                                     >
                                                     <span className="d-none d-sm-inline-block me-2">
-                                                      Send
-
+                                                      {props.t("Send")}
                                                     </span>{" "}
                                                         <i className="mdi mdi-send"/>
                                                     </Button>
