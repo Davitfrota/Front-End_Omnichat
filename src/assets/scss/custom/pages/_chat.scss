@@ -179,7 +179,6 @@
             .ctext-wrap {
                 background-color: var(--#{$prefix}light);
                 text-align: right;
-                max-width: 50%;
                 border-radius: 8px 8px 0px 8px;
             }
             .dropdown {
@@ -198,7 +197,6 @@
     }
 
     .left{
-        max-width: 50%;
         animation: slideInFromLeft 1s ease-in-out;
     }
     .down{
