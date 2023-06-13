@@ -63,7 +63,7 @@ const Chat = props => {
   }));
 
   const chats = React.useMemo(() => {
-  return [...unorderedChats].sort((a, b) => new Date(b.lastMessage.sentAt) - new Date(a.lastMessage.sentAt));
+  return [...unorderedChats].sort((a, b) => new Date(b.messagePot[b.messagePot.length-1].time) - new Date(a.messagePot[a.messagePot.length-1].time));
 }, [unorderedChats]);
 
   useEffect(() => {
@@ -105,36 +105,36 @@ const Chat = props => {
   const handleMessage = (messageData) => {
     // Cria um array com todos os chats
    
-      
-    let chatsArray = Object.values(chats);
-    console.log('messageData:', messageData);
-    const chatExists = chatsArray.some(chat => {
-      console.log('chat.phoneNumber:', chat.phoneNumber);
-      console.log('messageData.phoneNumber:', messageData.phoneNumber);
-      return chat.phoneNumber === messageData.phoneNumber;
-    });
+    if (messageData.phoneNumber) {
+      let chatsArray = Object.values(chats);
+      console.log('messageData:', messageData);
+      const chatExists = chatsArray.some(chat => {
+        console.log('chat.phoneNumber:', chat.phoneNumber);
+        console.log('messageData.phoneNumber:', messageData.phoneNumber);
+        return chat.phoneNumber === messageData.phoneNumber;
+      });
     
-    if (!chatExists) {
-      console.log('quantidade de chats: ' + chatsArray.length);
-      // Ajuste esta linha conforme a estrutura do seu estado de chat
+      if (!chatExists) {
+        console.log('quantidade de chats: ' + chatsArray.length);
+        // Ajuste esta linha conforme a estrutura do seu estado de chat
 
-      const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, lastMessage: messageData, unreadMessages: [messageData], name: messageData.sender, status: "active" };
+        const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, messagePot: [messageData], unreadMessages: 1, name: messageData.sender, status: "active" };
       
-      dispatch(onAddChat(newChat));
-    }
+        dispatch(onAddChat(newChat));
+      }
 
-    addMessage(messageData);
+      addMessage(messageData);
+      console.log('mensagem adicionada: ' + messageData.body);
     }
-    
-
+  }
 
   const userChatOpen = (chat) => {
     setChat_Box_Username(chat.name);
     setChat_Box_User_Status(chat.status);
     console.log(chat.phoneNumber)
     setCurrentPhoneNumber(chat.phoneNumber);
-    if (chat.unreadMessages && chat.unreadMessages.length > 0) {
-      dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: [] }))
+    if (chat.unreadMessages && chat.unreadMessages > 0) {
+      dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: 0 }))
     }
     dispatch(onGetMessages(chat.phoneNumber));
   };

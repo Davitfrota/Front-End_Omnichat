@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
 import instagramIcon from "../../assets/images/chat/MenssagerIcon.png";
 import React from "react";
+import ChatItemList from './ChatItemList';
 
 const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, currentPhoneNumber, messages, currentMessage,
                          onKeyPress, setMessageBox,currentUser, userChatOpen, ...props}) => {
@@ -74,78 +75,9 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                                 :map(chats, chat => (
                                                                 <li
                                                                     key={chat.id + chat.phoneNumber}
-                                                                    className={
-                                                                        currentPhoneNumber === chat.phoneNumber
-                                                                            ? props.t("Active")
-                                                                            : ""
-                                                                    }
+                                                                    className={`li-max-width ${currentPhoneNumber === chat.phoneNumber ? props.t("Active") : ""}`}
                                                                 >
-                                                                    <Link
-                                                                        to="#"
-                                                                        onClick={() => {
-                                                                           userChatOpen(chat);
-                                                                        }}
-                                                                    >
-                                                                        <div className="d-flex down">
-                                                                            <div className="align-self-center me-3">
-                                                                                <i
-                                                                                    className={
-                                                                                        chat.status === props.t("Active")
-                                                                                            ? "mdi mdi-circle text-success font-size-10"
-                                                                                            : chat.status === "intermediate"
-                                                                                                ? "mdi mdi-circle text-warning font-size-10"
-                                                                                                : "mdi mdi-circle font-size-10"
-                                                                                    }
-                                                                                />
-                                                                            </div>
-                                                                            {chat.isImg ?
-                                                                                <div
-                                                                                    className="avatar-xs align-self-center me-3">
-                                                                                  <span
-                                                                                      className="avatar-title rounded-circle bg-primary bg-soft text-primary">
-                                                                                    {chat.profile}
-                                                                                  </span>
-                                                                                </div>
-                                                                                :
-                                                                                <div
-                                                                                    className="align-self-center me-3">
-                                                                                    <img
-                                                                                        src={chat.from === 'whatsapp' ? whatsappIcon : instagramIcon}
-                                                                                        className="rounded-circle avatar-xs"
-                                                                                        alt=""
-                                                                                    />
-                                                                                </div>
-                                                                            }
-
-                                                                            <div
-                                                                                className="flex-grow-1 overflow-hidden">
-                                                                                <h5 className="text-truncate font-size-14 mb-1">
-                                                                                            {chat.name} {chat.phoneNummber} 
-                                                                                </h5>
-
-                                                                                {chat.lastMessage &&
-                                                                                <p className="text-truncate mb-0">
-                                                                                {chat.lastMessage.sender}: {chat.lastMessage.body}
-                                                                                </p>
-                                                                            }
-
-                                                                            </div>
-                                                                            <div className="flex overflow-hidden">
-                                                                                {chat.lastMessage &&
-                                                                            <div className="font-size-11">
-                                                                            
-                                                                              {chat.lastMessage.time}
-                                                                            </div>
-                                                                          }
-                                                                                {chat.unreadMessages && chat.unreadMessages.length > 0 &&
-                                                                                    <div
-                                                                                        className="unread-message-count">
-                                                                                        {chat.unreadMessages.length}
-                                                                                    </div>
-                                                                                }
-                                                                            </div>
-                                                                        </div>
-                                                                    </Link>
+                                                                  <ChatItemList chat={chat} userChatOpen={userChatOpen} t={props.t} />
                                                                 </li>
                                                             ))}
                                                         </PerfectScrollbar>
@@ -311,8 +243,8 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                                   {message.sender} 
                                                                         </div>
                                                                         <p>{message.body}</p>
-                                                                        <p className="chat-time mb-0"><i
-                                                                            className="bx bx-time-five align-middle me-1"></i> {message.time}
+                                                                        <p className="chat-time mb-0"> {message.time} <i
+                                                                            className="bx bx-check-double align-middle me-1"></i>
                                                                         </p>
                                                                     </div>
                                                                 </div>

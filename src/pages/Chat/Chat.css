@@ -48,3 +48,9 @@
   transform: translate(-50%, -50%) rotate(45deg) scale(1);
   opacity: 1;
 }
+
+/* CSS */
+.li-max-width {
+    max-width: 600px;  /* Defina o valor máximo que deseja */
+}
+
