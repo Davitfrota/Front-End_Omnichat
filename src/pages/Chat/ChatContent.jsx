@@ -10,7 +10,7 @@ import React from "react";
 import ChatItemList from './ChatItemList';
 
 const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, currentPhoneNumber, messages, currentMessage,
-                         onKeyPress, setMessageBox,currentUser, userChatOpen, ...props}) => {
+                         onKeyPress, setMessageBox,currentUser, userChatOpen,loading, ...props}) => {
     return (<React.Fragment>
         <div className="page-content">
             <Container fluid>
@@ -61,27 +61,29 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                             <TabPane tabId="1">
                                                 <div>
                                                     <h5 className="font-size-14 mb-3">{props.t("Recent")}</h5>
-                                                    <ul className="list-unstyled chat-list" id="recent-list">
-                                                        <PerfectScrollbar style={{ height: "410px" }}>
+                            <ul className="list-unstyled chat-list" id="recent-list">
+                              {loading ? (
+                                <Spinner color="primary" className="loader" />) : (
+                                <PerfectScrollbar style={{ height: "410px" }}>
                                                             
-                                                           {!chats ?
-                                                    <div className="error-message">
-                                                        <p className="error-message-text">An error occurred while loading chats</p>
-                                                    </div>
-                                                    : chats.length === 0 ?
+                                  {!chats ?
+                                    <div className="error-message">
+                                      <p className="error-message-text">An error occurred while loading chats</p>
+                                    </div>
+                                    : chats.length === 0 ?
                                                                                 
-                                                                                <p>{props.t("NoChats")}</p>	
+                                      <p>{props.t("NoChats")}</p>
                                                                                 
-                                                                                :map(chats, chat => (
-                                                                <li
-                                                                    key={chat.id + chat.phoneNumber}
-                                                                    className={`li-max-width ${currentPhoneNumber === chat.phoneNumber ? props.t("Active") : ""}`}
-                                                                >
-                                                                  <ChatItemList chat={chat} userChatOpen={userChatOpen} t={props.t} />
-                                                                </li>
-                                                            ))}
-                                                        </PerfectScrollbar>
-                                                    </ul>
+                                      : map(chats, chat => (
+                                        <li
+                                          key={chat.id + chat.phoneNumber}
+                                          className={`li-max-width ${currentPhoneNumber === chat.phoneNumber ? props.t("Active") : ""}`}
+                                        >
+                                          <ChatItemList chat={chat} userChatOpen={userChatOpen} t={props.t} />
+                                        </li>
+                                      ))}
+                                </PerfectScrollbar>)
+                              }                                                    </ul>
                                                 </div>
                                             </TabPane>
 

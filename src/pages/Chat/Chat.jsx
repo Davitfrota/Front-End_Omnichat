@@ -72,15 +72,13 @@ const Chat = props => {
     if (!isEmpty(messages)) scrollToBottom();
   }, [messages]);
 
+
   useEffect(() => {
-    socket.on('user_message', (data) => {
+    
+    socket.on('message', (data) => {
       handleMessage(data)
     });
 
-    socket.on('dialogflow_message', (data) => {
-      handleMessage(data)
-    });
-    
     return () => {
       socket.disconnect()
     };
@@ -224,7 +222,8 @@ const Chat = props => {
       <ChatContent activeTab={activeTab} chats={chats} chatBoxUsername={ChatBoxUsername}
         currentPhoneNumber={currentPhoneNumber}
         currentUser={currentUser} 
-                      Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
+        Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
+        loading={loading} error={error} toggleTab={toggleTab} toggleSearch={toggleSearch}
                       onKeyPress={onKeyPress} setMessageBox={setMessageBox} userChatOpen={userChatOpen}
     {...props } />
     </div>
