@@ -2,15 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Assuming you are using React Router
 import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
 import instagramIcon from "../../assets/images/chat/instagramIcon.png";
-import MenssagerIcon from "../../assets/images/chat/MenssagerIcon.png";
+import facebookIcon from "../../assets/images/chat/MenssagerIcon.png";
 const ChatItemList = (props) => {
   const { chat, userChatOpen, t } = props;
 
   const social_icons = {
     whatsapp: whatsappIcon,
     instagram: instagramIcon,
-    messenger: MenssagerIcon,
-
+    facebook: facebookIcon,
   }
   return (
     <Link
