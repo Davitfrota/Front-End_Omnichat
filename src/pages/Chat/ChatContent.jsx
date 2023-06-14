@@ -205,53 +205,35 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                             <span className="title">{props.t("Today")}</span>
                                                         </div>
                                                     </li>
-                                                    {messages && messages.length > 0 && messages[0].phoneNumber == currentPhoneNumber &&
-                                                        map(messages, message => (
-                                                            <li
-                                                                key={"test_k" + message.id}
-                                                                className={
-                                                                    message.sender === currentUser.name || message.sender === 'ChatBot'
-                                                                        ? "right"
-                                                                        : "left"
-                                                                          
-                                                                }
-                                                            >
-                                                                <div className="conversation-list">
-                                                                    {/*<UncontrolledDropdown> Copy, Select, Delete a menssage in chat
-                                      <DropdownToggle
-                                        href="#"
-                                        tag="a" className="dropdown-toggle"
-                                      >
-                                        <i className="bx bx-dots-vertical-rounded" />
-                                      </DropdownToggle>
-                                      <DropdownMenu>
-                                        <DropdownItem onClick={(e) => copyMsg(e.target)} href="#">
-                                          Copy
-                                        </DropdownItem>
-                                        <DropdownItem href="#">
-                                          Save
-                                        </DropdownItem>
-                                        <DropdownItem href="#">
-                                          Forward
-                                        </DropdownItem>
-                                        <DropdownItem onClick={(e) => toggle_deleMsg(e.target)} href="#">
-                                          Delete
-                                        </DropdownItem>
+                        {messages && messages.length > 0 && messages.map(message => {
+  if (message.phoneNumber === currentPhoneNumber) {
+    return (
+      <li
+        key={"test_k" + message.id}
+        className={
+          message.sender === currentUser.name || message.sender === 'ChatBot'
+            ? "right"
+            : "left"
+        }
+      >
+        <div className="conversation-list">
+          <div className="ctext-wrap">
+            <div className="conversation-name">
+              {message.sender}
+            </div>
+            <p>{message.body}</p>
+            <p className="chat-time mb-0">
+              {message.time} <i className="bx bx-check-double align-middle me-1"></i>
+            </p>
+          </div>
+        </div>
+      </li>
+    );
+  } else {
+    return null;
+  }
+})}
 
-                                      </DropdownMenu>
-                                    </UncontrolledDropdown> */}
-                                                                    <div className="ctext-wrap">
-                                                                        <div className="conversation-name">
-                                                                  {message.sender} 
-                                                                        </div>
-                                                                        <p>{message.body}</p>
-                                                                        <p className="chat-time mb-0"> {message.time} <i
-                                                                            className="bx bx-check-double align-middle me-1"></i>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        ))}
                                                 </PerfectScrollbar>
                                             </ul>
                                         </div>

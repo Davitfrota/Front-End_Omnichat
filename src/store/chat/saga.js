@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, takeLatest } from "redux-saga/effects";
 
 // Chat Redux States
 import {
@@ -102,10 +102,10 @@ function* onUpdateChat({ messageData }) {
 
 
 function* chatSaga() {
-  yield takeEvery(GET_CHATS, onGetChats);
-  yield takeEvery(POST_ADD_CHAT, onAddChats)
+  yield takeLatest(GET_CHATS, onGetChats);
+  yield takeLatest(POST_ADD_CHAT, onAddChats)
   yield takeEvery(PUT_UPDATE_CHAT, onUpdateChat)
-  yield takeEvery(GET_MESSAGES, onGetMessages);
+  yield takeLatest(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);
 }
 

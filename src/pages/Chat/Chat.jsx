@@ -48,14 +48,9 @@ const Chat = props => {
 
   
   const socket = io('https://twilliopizza.mateusb121.repl.co');
-  useEffect(() => {
-    dispatch(onGetChats());
-    
-  }, [onGetChats, onAddChat, onAddMessage, onGetMessages,
-    currentPhoneNumber]);
 
   
-  const {chats: unorderedChats, groups, contacts, messages, loading, error } = useSelector(state => ({
+  const {chats, groups, contacts, messages, loading, error } = useSelector(state => ({
     chats: state.chat.chats,
     groups: state.chat.groups,
     contacts: state.chat.contacts,
@@ -63,10 +58,12 @@ const Chat = props => {
     loading: state.chat.loading,
     error: state.chat.error
   }));
+    useEffect(() => {
+    dispatch(onGetChats());
+    
+  }, [onGetChats, onAddChat, onAddMessage, onGetMessages, chats, messages]);
 
-  const chats = React.useMemo(() => {
-  return [...unorderedChats].sort((a, b) => new Date(b.messagePot[b.messagePot.length-1].time) - new Date(a.messagePot[a.messagePot.length-1].time));
-}, [unorderedChats]);
+
 
   useEffect(() => {
     if (!isEmpty(messages)) scrollToBottom();
@@ -83,6 +80,10 @@ const Chat = props => {
       socket.disconnect()
     };
   }, []);
+
+  useEffect(() => {
+  console.log('currentPhoneNumber atualizado:', currentPhoneNumber);
+}, [currentPhoneNumber]);
 
   const toggleSearch = () => {
     setsearch_Menu(!search_Menu);
@@ -122,48 +123,55 @@ const Chat = props => {
     displayErrorToast(error.message);
   }
 
-  const handleMessage = (messageData) => {
+  const handleMessage =  (messageData) => {
     // Cria um array com todos os chats
-   
     if (messageData.phoneNumber) {
       let chatsArray = Object.values(chats);
       console.log('messageData:', messageData);
-      const chatExists = chatsArray.some(chat => {
-        console.log('chat.phoneNumber:', chat.phoneNumber);
-        console.log('messageData.phoneNumber:', messageData.phoneNumber);
+      console.log(chats)
+      
+      const chatExists = chats.some(chat => {
+      
         return chat.phoneNumber === messageData.phoneNumber;
       });
-    
+    console.log('chatExists: ' + chatExists);
       if (!chatExists) {
         console.log('quantidade de chats: ' + chatsArray.length);
         // Ajuste esta linha conforme a estrutura do seu estado de chat
 
-        const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, messagePot: [messageData], unreadMessages: 1, name: messageData.sender, status: "active" };
-      
+        const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, messagePot: [], unreadMessages: 0, name: messageData.sender, status: "active" };
+        console.log('adicionando chat')
         dispatch(onAddChat(newChat));
       }
 
-      addMessage(messageData);
-      console.log('mensagem adicionada: ' + messageData.body);
+       addMessage(messageData);
+      
     }
   }
 
   const userChatOpen = (chat) => {
     setChat_Box_Username(chat.name);
     setChat_Box_User_Status(chat.status);
-    console.log(chat.phoneNumber)
+
     setCurrentPhoneNumber(chat.phoneNumber);
+    console.log('currentPhoneNumber: ' + currentPhoneNumber)
     if (chat.unreadMessages && chat.unreadMessages > 0) {
+      
+      console.log('abrindo chat')
+
       dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: 0 }))
     }
     dispatch(onGetMessages(chat.phoneNumber));
   };
 
   const addMessage = (messageData) => {
+    console.log(currentPhoneNumber)
     if (messageData.phoneNumber === currentPhoneNumber) {
+      console.log('mensagem ser adicionada, mesmo numero: ' + messageData.body)
       setcurrentMessage(messageData.body);
      }
     else {
+      console.log('mensagem ser adicionada: ' + messageData.body);
       AddUnreadMessageToChat(messageData)
      }
     const message = {
@@ -187,7 +195,8 @@ const Chat = props => {
     }
   };
 
-  const AddUnreadMessageToChat = (messageData) => { 
+  const AddUnreadMessageToChat = (messageData) => {
+    console.log('adicionando mensagem não lida')
       dispatch(onUpdateChat(messageData))
   }
   const onKeyPress = e => {

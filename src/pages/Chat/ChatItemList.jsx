@@ -39,27 +39,30 @@ const ChatItemList = (props) => {
           </div>
         )}
 
-        <div className="flex-grow-1 overflow-hidden">
-          <h5 className="text-truncate font-size-14 mb-1">
-            {chat.name} {chat.phoneNummber}
-          </h5>
+  <div className="flex-grow-1 overflow-hidden">
+  <div className="d-flex justify-content-between">
+    <h5 className="text-truncate font-size-14 mb-1">
+      {chat.name} {chat.phoneNummber}
+    </h5>
+    {chat.messagePot && chat.messagePot.length > 0 && (
+      <div className="font-size-11">{chat.messagePot[chat.messagePot.length - 1].time}</div>
+    )}
+  </div>
 
-          {chat.messagePot && (
-            <p className="text-truncate mb-0">
-              {chat.messagePot[chat.messagePot.length -1].sender}: {chat.messagePot[chat.messagePot.length -1].body}
-            </p>
-          )}
+  {chat.messagePot && chat.messagePot.length > 0 && (
+    <div className="d-flex justify-content-between">
+      <p className="text-truncate mb-0">
+        {chat.messagePot[chat.messagePot.length - 1].sender}: {chat.messagePot[chat.messagePot.length - 1].body}
+      </p>
+      {chat.unreadMessages != 0 && (
+        <div className="unread-message-count">
+          {chat.unreadMessages}
         </div>
-        <div className="flex overflow-hidden">
-          {chat.messagePot && (
-            <div className="font-size-11">{chat.messagePot[chat.messagePot.length -1].time}</div>
-          )}
-          {chat.unreadMessages != 0 && (
-            <div className="unread-message-count">
-              {chat.unreadMessages}
-            </div>
-          )}
-        </div>
+      )}
+    </div>
+  )}
+</div>
+
       </div>
     </Link>
   );
