@@ -3,9 +3,6 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import ProfileMenu from "../../components/CommonForBoth/TopbarDropdown/ProfileMenu";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {map} from "lodash";
-import {Link} from "react-router-dom";
-import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
-import instagramIcon from "../../assets/images/chat/MenssagerIcon.png";
 import React from "react";
 import ChatItemList from './ChatItemList';
 

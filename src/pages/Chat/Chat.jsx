@@ -47,7 +47,7 @@ const Chat = props => {
   const [isToastActive, setIsToastActive] = useState(false);
 
   
-  const socket = io('https://twilliopizza.mateusb121.repl.co');
+  const socket = io('http://localhost:8000');
 
   
   const {chats, groups, contacts, messages, loading, error } = useSelector(state => ({
@@ -72,7 +72,7 @@ const Chat = props => {
 
   useEffect(() => {
     
-    socket.on('message', (data) => {
+    socket.on('message_received', (data) => {
       handleMessage(data)
     });
 
