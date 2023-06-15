@@ -90,7 +90,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                 </div>
                             </div>
                             <div className="w-100 user-chat">
-                                <Card>
+                                <Card className="border_rounded">
                                     <div className="p-4 border-bottom ">
                                         {currentPhoneNumber &&
                                             <Row>
