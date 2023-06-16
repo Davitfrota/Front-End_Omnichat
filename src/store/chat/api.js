@@ -20,8 +20,9 @@ export const getChats = async () => {
 export const addChat = async (chatData) => {
     try {
         if (!chatData) throw new Error("Dados de chat inválidos");
+        console.log('enviando requisição para create_conversation')
         const response = await axiosApi.post(`/create_conversation`, chatData);
-        console.log(response.data)
+        console.log('conversa criada', response.data)
         return response.data;
     } catch (error) {
         console.error("Erro ao adicionar chat", error);
