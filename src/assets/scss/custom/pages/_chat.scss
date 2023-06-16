@@ -48,6 +48,11 @@
     }
 }
 
+.border_rounded{
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 8px;
+}
+
 .chat-list {
     margin: 0;
     li {
@@ -177,7 +182,7 @@
         .conversation-list {
             float: right;
             .ctext-wrap {
-                background-color: var(--#{$prefix}light);
+                background-color: rgb(152, 244, 152);
                 text-align: right;
                 border-radius: 8px 8px 0px 8px;
             }
