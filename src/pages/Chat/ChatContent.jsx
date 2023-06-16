@@ -309,13 +309,12 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                 </Col>
                                                 <Col className="col-auto">
                                                     <Button
-                                                        type="button"
-                              color="primary"
-                              disabled={!currentPhoneNumber}
+                                                        color="primary"
+                                                        disabled={!currentPhoneNumber}
                                                         onClick={() =>
                                                             addMessage(currentPhoneNumber, currentUser.name)
                                                         }
-                                                        className="btn1"
+                                                        className="btn1 border_rounded"
                                                     >
                                                     <span className="d-none d-sm-inline-block me-2">
                                                       {props.t("Send")}

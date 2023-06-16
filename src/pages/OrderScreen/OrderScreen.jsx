@@ -74,18 +74,18 @@ import PerfectScrollbar from "react-perfect-scrollbar";
           {
             id: 2,
             customer: 'Maria',
-            pizza: 'Marguerita calabresa salsicha mortadela com coca de 2 l',
+            pizza: 'Meia Marguerita Meia calabresa',
             observation: 'Adicionar azeitonas',
             status: 'Pronta para entrega',
             address: 'Avenida Principal 789',
-            platform: 'WhatsApp',
+            platform: 'Instagram',
             communication: '999123456'
           },
           {
             id: 3,
             customer: 'Carlos',
             pizza: 'Quatro Queijos',
-            observation: 'Com borda recheada de cheddar e bacon com catupiry',
+            observation: 'Com borda recheada de cheddar',
             status: 'A caminho',
             address: 'Rua das Flores 10',
             platform: 'WhatsApp',
@@ -104,7 +104,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
           {
             id: 5,
             customer: 'Pedro',
-            pizza: 'Portuguesa',
+            pizza: 'Portuguesa e uma Coca Cola de 2 Litros',
             observation: 'Sem cebola',
             status: 'Entregue',
             address: 'Rua das Palmeiras 512',

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import WhatsAppIcon from "../../assets/images/chat/whatsappIcon.png";
 import MessagerIcon from "../../assets/images/chat/MenssagerIcon.png";
-
+import InstagramIcon from "../../assets/images/chat/instagramIcon.png";
 const PlatformIcon = ({ platform, communication }) => {
   const [showPopup, setShowPopup] = useState(false);
 
@@ -37,8 +37,9 @@ const PlatformIcon = ({ platform, communication }) => {
                 ? WhatsAppIcon
                 : platform === "Messenger"
                     ? MessagerIcon
-                    : MessagerIcon
-                    
+                    : platform === "Instagram"
+                      ? InstagramIcon
+                      : null
         } 
     alt="Ícone da Plataforma" />
 
