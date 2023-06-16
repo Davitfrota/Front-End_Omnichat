@@ -103,7 +103,7 @@ function* onUpdateChat({ messageData }) {
 function* chatSaga() {
   yield takeLatest(GET_CHATS, onGetChats);
   yield takeEvery(POST_ADD_CHAT, onAddChats)
-  yield takeEvery(PUT_UPDATE_CHAT, onUpdateChat)
+  yield takeLatest(PUT_UPDATE_CHAT, onUpdateChat)
   yield takeLatest(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);
 }

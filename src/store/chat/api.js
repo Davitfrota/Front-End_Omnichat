@@ -46,6 +46,7 @@ export const addMessage = async (messageData) => {
     try {
         if (!messageData) throw new Error("Dados de mensagem inválidos");
         const response = await axiosApi.post(`/add_message`, messageData);
+        console.log('adicionou mensagem ',response.data )
         return response.data;
     } catch (error) {
         console.error("Erro ao adicionar mensagem", error);
