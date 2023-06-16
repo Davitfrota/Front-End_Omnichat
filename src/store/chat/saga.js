@@ -61,7 +61,6 @@ function* onAddChats({ chat }) {
     const response = yield call(addChat, chat);
     console.log(response)
     yield put(addChatSuccess(response));
-    console.log("deu certo")
   } catch (error) {
     console.log(error)
     yield put(addChatFail(error));
@@ -103,7 +102,7 @@ function* onUpdateChat({ messageData }) {
 
 function* chatSaga() {
   yield takeLatest(GET_CHATS, onGetChats);
-  yield takeLatest(POST_ADD_CHAT, onAddChats)
+  yield takeEvery(POST_ADD_CHAT, onAddChats)
   yield takeEvery(PUT_UPDATE_CHAT, onUpdateChat)
   yield takeLatest(GET_MESSAGES, onGetMessages);
   yield takeEvery(POST_ADD_MESSAGE, onAddMessage);

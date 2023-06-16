@@ -47,7 +47,7 @@ const Chat = props => {
   const [isToastActive, setIsToastActive] = useState(false);
 
   
-  const socket = io('http://localhost:8000');
+ const socket = io('http://localhost:3000');
 
   
   const {chats, groups, contacts, messages, loading, error } = useSelector(state => ({
@@ -59,9 +59,10 @@ const Chat = props => {
     error: state.chat.error
   }));
     useEffect(() => {
-    dispatch(onGetChats());
-    
-  }, [onGetChats, onAddChat, onAddMessage, onGetMessages, chats, messages]);
+      dispatch(onGetChats());
+      if (currentPhoneNumber) { dispatch(onGetMessages(currentPhoneNumber)); }
+    }, [dispatch]);
+
 
 
 
@@ -72,12 +73,13 @@ const Chat = props => {
 
   useEffect(() => {
     
-    socket.on('message_received', (data) => {
+    socket.on('message', (data) => {
+      console.log('message_received:', data);
       handleMessage(data)
     });
 
     return () => {
-      socket.disconnect()
+     // socket.disconnect();
     };
   }, []);
 
@@ -127,8 +129,8 @@ const Chat = props => {
     // Cria um array com todos os chats
     if (messageData.phoneNumber) {
       let chatsArray = Object.values(chats);
-      console.log('messageData:', messageData);
-      console.log(chats)
+      
+
       
       const chatExists = chats.some(chat => {
       
@@ -136,11 +138,11 @@ const Chat = props => {
       });
     console.log('chatExists: ' + chatExists);
       if (!chatExists) {
-        console.log('quantidade de chats: ' + chatsArray.length);
+  
         // Ajuste esta linha conforme a estrutura do seu estado de chat
 
         const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, messagePot: [], unreadMessages: 0, name: messageData.sender, status: "active" };
-        console.log('adicionando chat')
+        
         dispatch(onAddChat(newChat));
       }
 
@@ -157,7 +159,7 @@ const Chat = props => {
     console.log('currentPhoneNumber: ' + currentPhoneNumber)
     if (chat.unreadMessages && chat.unreadMessages > 0) {
       
-      console.log('abrindo chat')
+     
 
       dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: 0 }))
     }
@@ -165,15 +167,15 @@ const Chat = props => {
   };
 
   const addMessage = (messageData) => {
-    console.log(currentPhoneNumber)
+    
+    console.log(currentPhoneNumber);
     if (messageData.phoneNumber === currentPhoneNumber) {
-      console.log('mensagem ser adicionada, mesmo numero: ' + messageData.body)
       setcurrentMessage(messageData.body);
-     }
-    else {
-      console.log('mensagem ser adicionada: ' + messageData.body);
-      AddUnreadMessageToChat(messageData)
-     }
+    } else {
+      
+      AddUnreadMessageToChat(messageData);
+    }
+  
     const message = {
       
       phoneNumber: messageData.phoneNumber,
@@ -196,7 +198,7 @@ const Chat = props => {
   };
 
   const AddUnreadMessageToChat = (messageData) => {
-    console.log('adicionando mensagem não lida')
+    
       dispatch(onUpdateChat(messageData))
   }
   const onKeyPress = e => {

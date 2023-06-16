@@ -4,12 +4,12 @@ import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
 import instagramIcon from "../../assets/images/chat/instagramIcon.png";
 import facebookIcon from "../../assets/images/chat/MenssagerIcon.png";
 const ChatItemList = (props) => {
-  const { chat, userChatOpen, t } = props;
+  const { chat, userChatOpen, t, from } = props;
 
   const social_icons = {
     whatsapp: whatsappIcon,
     instagram: instagramIcon,
-    facebook: facebookIcon,
+    messenger: facebookIcon,
   }
   return (
     <Link
@@ -39,7 +39,7 @@ const ChatItemList = (props) => {
         ) : (
           <div className="align-self-center me-3">
             <img
-              src={social_icons[chat.from]}
+              src={from}
               className="rounded-circle avatar-xs"
               alt=""
             />

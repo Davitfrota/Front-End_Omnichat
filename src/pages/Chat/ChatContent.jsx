@@ -5,9 +5,17 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import {map} from "lodash";
 import React from "react";
 import ChatItemList from './ChatItemList';
+import whatsappIcon from "../../assets/images/chat/whatsappIcon.png";
+import instagramIcon from "../../assets/images/chat/instagramIcon.png";
+import facebookIcon from "../../assets/images/chat/MenssagerIcon.png";
 
 const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, currentPhoneNumber, messages, currentMessage,
-                         onKeyPress, setMessageBox,currentUser, userChatOpen,loading, ...props}) => {
+  onKeyPress, setMessageBox, currentUser, userChatOpen, loading, ...props }) => {
+  const social_icons = {
+    whatsapp: whatsappIcon,
+    instagram: instagramIcon,
+    messenger: facebookIcon,
+  }
     return (<React.Fragment>
         <div className="page-content">
             <Container fluid>
@@ -76,7 +84,7 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                           key={chat.id + chat.phoneNumber}
                                           className={`li-max-width ${currentPhoneNumber === chat.phoneNumber ? props.t("Active") : ""}`}
                                         >
-                                          <ChatItemList chat={chat} userChatOpen={userChatOpen} t={props.t} />
+                                          <ChatItemList chat={chat} userChatOpen={userChatOpen} t={props.t} from={social_icons[chat.from]} />
                                         </li>
                                       ))}
                                 </PerfectScrollbar>)
@@ -112,7 +120,8 @@ const ChatContent = ({ activeTab, chats, chatBoxUsername, Chat_Box_User_Status, 
                                                         {Chat_Box_User_Status}
                                                     </p>
                                                 </Col>
-                                                <Col md="8" xs="3">
+                          <Col md="8" xs="3">
+                          
                                                     {/* <ul className="list-inline user-chat-nav text-end mb-0">
                             <li className="list-inline-item d-none d-sm-inline-block">
                               <Dropdown

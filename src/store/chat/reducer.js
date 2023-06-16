@@ -108,8 +108,6 @@ const Calendar = (state = INIT_STATE, action) => {
     
     case PUT_UPDATE_CHAT_SUCCESS: { 
        const updatedChat = action.payload
-      console.log("updatedChat " + updatedChat)
-      console.log("state.chats " + state.chats)
       const chats = state.chats.map(chat =>
           chat.phoneNumber === updatedChat.phoneNumber ? updatedChat : chat
         );

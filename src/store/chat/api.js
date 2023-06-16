@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://twilliopizza.mateusb121.repl.co'
+const API_URL = 'http://localhost:3000'
 
 const axiosApi = axios.create({
     baseURL: API_URL,
@@ -46,7 +46,7 @@ export const addMessage = async (messageData) => {
     try {
         if (!messageData) throw new Error("Dados de mensagem inválidos");
         const response = await axiosApi.post(`/add_message`, messageData);
-        return response;
+        return response.data;
     } catch (error) {
         console.error("Erro ao adicionar mensagem", error);
         throw error;
