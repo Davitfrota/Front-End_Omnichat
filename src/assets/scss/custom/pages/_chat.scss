@@ -178,7 +178,7 @@
     }
 
     .right {
-        animation: slideInFromRight 0.5s ease-in-out;
+        animation: slideInFromRight 0.3s ease-in-out;
         .conversation-list {
             float: right;
             .ctext-wrap {
@@ -202,7 +202,7 @@
     }
 
     .left{
-        animation: slideInFromLeft 1s ease-in-out;
+        animation: slideInFromLeft 0.3s ease-in-out;
     }
     .down{
         animation: slideInFromDown 1s ease-in-out;
