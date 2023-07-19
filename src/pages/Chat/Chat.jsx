@@ -46,10 +46,10 @@ const Chat = props => {
   const [currentMessage, setcurrentMessage] = useState("");
   const [isToastActive, setIsToastActive] = useState(false);
 
-  
- const socket = io('http://localhost:3000');
 
-  
+  const socket = io('http://localhost:3000');
+
+
   const {chats, groups, contacts, messages, loading, error } = useSelector(state => ({
     chats: state.chat.chats,
     groups: state.chat.groups,
@@ -58,10 +58,10 @@ const Chat = props => {
     loading: state.chat.loading,
     error: state.chat.error
   }));
-    useEffect(() => {
-      dispatch(onGetChats());
-      if (currentPhoneNumber) { dispatch(onGetMessages(currentPhoneNumber)); }
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(onGetChats());
+    if (currentPhoneNumber) { dispatch(onGetMessages(currentPhoneNumber)); }
+  }, [dispatch]);
 
 
 
@@ -72,20 +72,20 @@ const Chat = props => {
 
 
   useEffect(() => {
-    
+
     socket.on('message', (data) => {
       console.log('message_received:', data);
       handleMessage(data)
     });
 
     return () => {
-     // socket.disconnect();
+      // socket.disconnect();
     };
   }, []);
 
   useEffect(() => {
-  console.log('currentPhoneNumber atualizado:', currentPhoneNumber);
-}, [currentPhoneNumber]);
+    console.log('currentPhoneNumber atualizado:', currentPhoneNumber);
+  }, [currentPhoneNumber]);
 
   const toggleSearch = () => {
     setsearch_Menu(!search_Menu);
@@ -129,25 +129,25 @@ const Chat = props => {
     // Cria um array com todos os chats
     if (messageData.phoneNumber) {
       let chatsArray = Object.values(chats);
-      
 
-      
+
+
       const chatExists = chats.some(chat => {
-      
+
         return chat.phoneNumber === messageData.phoneNumber;
       });
-    console.log('chatExists: ' + chatExists);
+      console.log('chatExists: ' + chatExists);
       if (!chatExists) {
-  
+
         // Ajuste esta linha conforme a estrutura do seu estado de chat
 
         const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, messagePot: [], unreadMessages: 0, name: messageData.sender, status: "active" };
-        
+
         dispatch(onAddChat(newChat));
       }
 
-       addMessage(messageData);
-      
+      addMessage(messageData);
+
     }
   }
 
@@ -158,8 +158,8 @@ const Chat = props => {
     setCurrentPhoneNumber(chat.phoneNumber);
     console.log('currentPhoneNumber: ' + currentPhoneNumber)
     if (chat.unreadMessages && chat.unreadMessages > 0) {
-      
-     
+
+
 
       dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: 0 }))
     }
@@ -167,17 +167,17 @@ const Chat = props => {
   };
 
   const addMessage = (messageData) => {
-    
+
     console.log(currentPhoneNumber);
     if (messageData.phoneNumber === currentPhoneNumber) {
       setcurrentMessage(messageData.body);
     } else {
-      
+
       AddUnreadMessageToChat(messageData);
     }
-  
+
     const message = {
-      
+
       phoneNumber: messageData.phoneNumber,
       sender: messageData.sender,
       body: messageData.body,
@@ -198,8 +198,8 @@ const Chat = props => {
   };
 
   const AddUnreadMessageToChat = (messageData) => {
-    
-      dispatch(onUpdateChat(messageData))
+
+    dispatch(onUpdateChat(messageData))
   }
   const onKeyPress = e => {
     const { key, value } = e;
@@ -228,16 +228,16 @@ const Chat = props => {
 
 
   return (
-    <div>
-      <ToastContainer/>
-      <ChatContent activeTab={activeTab} chats={chats} chatBoxUsername={ChatBoxUsername}
-        currentPhoneNumber={currentPhoneNumber}
-        currentUser={currentUser} 
-        Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
-        loading={loading} error={error} toggleTab={toggleTab} toggleSearch={toggleSearch}
-                      onKeyPress={onKeyPress} setMessageBox={setMessageBox} userChatOpen={userChatOpen}
-    {...props } />
-    </div>
+      <div>
+        <ToastContainer/>
+        <ChatContent activeTab={activeTab} chats={chats} chatBoxUsername={ChatBoxUsername}
+                     currentPhoneNumber={currentPhoneNumber}
+                     currentUser={currentUser}
+                     Chat_Box_User_Status={Chat_Box_User_Status} messages={messages} currentMessage={currentMessage}
+                     loading={loading} error={error} toggleTab={toggleTab} toggleSearch={toggleSearch}
+                     onKeyPress={onKeyPress} setMessageBox={setMessageBox} userChatOpen={userChatOpen}
+                     {...props } />
+      </div>
   );
 };
 
