@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col, FormGroup } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 import { connect } from "react-redux";
 import {
@@ -25,10 +25,6 @@ import { Link } from "react-router-dom";
 import "../../components/CommonForBoth/rightbar.scss";
 
 //Import images
-import bgimg1 from "../../assets/images/sidebar/img1.jpg";
-import bgimg2 from "../../assets/images/sidebar/img2.jpg";
-import bgimg3 from "../../assets/images/sidebar/img3.jpg";
-import bgimg4 from "../../assets/images/sidebar/img4.jpg";
 
 
 //constants

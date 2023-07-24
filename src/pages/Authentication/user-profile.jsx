@@ -26,7 +26,7 @@ import { withRouter } from "react-router-dom";
 //Import Breadcrumb
 import Breadcrumb from "../../components/Common/Breadcrumb";
 
-import avatar from "../../assets/images/users/Icone_Usuario.png";
+
 import Menssager from "../../assets/images/chat/MenssagerIcon.png";
 import whatts from "../../assets/images/chat/whatsappIcon.png";
 import voltar from "../../assets/images/chat/return.png";

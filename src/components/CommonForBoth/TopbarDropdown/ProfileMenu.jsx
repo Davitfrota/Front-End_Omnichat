@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import user1 from "../../../assets/images/users/Icone_Usuario.png";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -14,7 +15,6 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
 // users
-import user1 from "../../../assets/images/users/Icone_Usuario.png";
 
 const ProfileMenu = (props) => {
   // Declare a new state variable, which we'll call "menu"

@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000'
 
 const axiosApi = axios.create({
-    baseURL: API_URL,
+    baseURL: import.meta.env.REACT_APP_API_URL,
 })
 
 export const getChats = async () => {

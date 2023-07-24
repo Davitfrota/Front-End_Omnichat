@@ -7,7 +7,7 @@ import "./i18n"
 import { Provider } from "react-redux"
 import store  from "./store";
 
-
+DeviceMotionEvent.con
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.Fragment>
         <Provider store={store}>

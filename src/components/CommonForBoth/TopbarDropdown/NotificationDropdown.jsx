@@ -5,8 +5,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, Row, Col } from "reactstrap"
 import SimpleBar from "simplebar-react"
 
 //Import images
-import avatar3 from "../../../assets/images/users/avatar-3.jpg"
-import avatar4 from "../../../assets/images/users/avatar-4.jpg"
+
 
 //i18n
 import { withTranslation } from "react-i18next"
