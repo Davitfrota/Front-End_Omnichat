@@ -87,10 +87,21 @@ const Calendar = (state = INIT_STATE, action) => {
       }
     
     case POST_ADD_CHAT_SUCCESS: {
-        let response = action.payload == false ? [...state.chats] : [...state.chats, action.payload] 
+      console.log('action.payload: ', action.payload)
+      for (const chatId in state.chats) {
+        if (state.chats.hasOwnProperty(chatId)) {
+          if (state.chats[chatId].phoneNumber == action.payload.phoneNumber) {
+            state.chats[chatId].messagePot = [...state.chats[chatId].messagePot, action.payload.messagePot[0]]
+            return {
+              ...state,
+              chats: [...state.chats]
+            }
+          }
+        }
+      }
       return {
         ...state,
-        chats: response,
+        chats: [...state.chats , action.payload]
 
       }
     }
@@ -107,10 +118,22 @@ const Calendar = (state = INIT_STATE, action) => {
       }
     
     case PUT_UPDATE_CHAT_SUCCESS: { 
-       const updatedChat = action.payload
-      const chats = state.chats.map(chat =>
-          chat.phoneNumber === updatedChat.phoneNumber ? updatedChat : chat
-        );
+      const updatedChat = action.payload
+      console.log('updatedChat: ', updatedChat)
+      for (const chatId in state.chats) {
+        if (state.chats.hasOwnProperty(chatId)) {
+
+    const messages = state.chats[chatId].messagePot;
+    console.log(messages)
+    // Iterando sobre as mensagens da conversa atual
+    messages.forEach(message => {
+      console.log(message.body);
+      console.log(message.sender);
+      // ... outros campos ...
+    });
+  }
+}
+    const chats = [...state.chats]       
       return {
        
       

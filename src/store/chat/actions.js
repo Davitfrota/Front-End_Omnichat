@@ -29,9 +29,9 @@ export const getChats = () => ({
   type: GET_CHATS,
 })
 
-export const updateChat = (messageData) => ({
+export const updateChat = (chatData) => ({
   type: PUT_UPDATE_CHAT, 
-  messageData,
+  chatData,
   
 })
 

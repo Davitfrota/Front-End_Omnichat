@@ -87,9 +87,9 @@ function* onAddMessage({ message }) {
   }
 }
 
-function* onUpdateChat({ messageData }) {
+function* onUpdateChat({ chatData }) {
   try {
-    const response = yield call(updateChat, messageData);
+    const response = yield call(updateChat, chatData);
     console.log(response)
     yield put(updateChatSuccess(response));
   } catch (error) {

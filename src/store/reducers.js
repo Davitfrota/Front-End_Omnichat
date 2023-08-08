@@ -15,7 +15,7 @@ import chat from "./chat/reducer"
 //contacts
 import contacts from "./contacts/reducer"
 
-
+import orders from "./orders/reducer"
 
 const rootReducer = combineReducers({
 
@@ -26,6 +26,7 @@ const rootReducer = combineReducers({
   Profile,
   chat,
   contacts,
+  orders
 })
 
 export default rootReducer

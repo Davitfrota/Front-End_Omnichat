@@ -12,3 +12,4 @@ export * from "./chat/actions"
 // contacts
 export * from "./contacts/actions"
 
+export * from "./orders/actions"

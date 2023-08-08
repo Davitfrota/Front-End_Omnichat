@@ -8,6 +8,7 @@ import ProfileSaga from "./auth/profile/saga"
 import LayoutSaga from "./layout/saga"
 import chatSaga from "./chat/saga"
 import contactsSaga from "./contacts/saga";
+import ordersSaga from "./orders/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -19,6 +20,6 @@ export default function* rootSaga() {
     fork(LayoutSaga),
     fork(chatSaga),
     fork(contactsSaga),
-
+    fork(ordersSaga)
   ])
 }
