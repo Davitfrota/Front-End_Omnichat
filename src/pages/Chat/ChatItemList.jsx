@@ -15,6 +15,7 @@ const ChatItemList = (props) => {
     <Link
       to="#"
       onClick={() => {
+        console.log(chat)
         userChatOpen(chat);
       }}
     >
@@ -61,7 +62,7 @@ const ChatItemList = (props) => {
       <p className="text-truncate mb-0">
         {chat.messagePot[chat.messagePot.length - 1].sender}: {chat.messagePot[chat.messagePot.length - 1].body}
       </p>
-      {chat.unreadMessages != 0 && (
+      {!chat.unreadMessages || chat.unreadMessages != 0 && (
         <div className="unread-message-count">
           {chat.unreadMessages}
         </div>

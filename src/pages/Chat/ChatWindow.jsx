@@ -4,11 +4,11 @@ import { Button, Col, Row, Card } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { ChatContext } from "./ChatContext";
 
-const ChatWindow = (props) => {
+const ChatWindow = () => {
 
       const {
     currentPhoneNumber,
-    chatBoxUsername,
+    ChatBoxUsername,
     Chat_Box_User_Status,
     currentUser,
     messages,
@@ -18,6 +18,8 @@ const ChatWindow = (props) => {
     setMessageBox,
     addMessage,
   } = useContext(ChatContext);
+
+  
   return (
     <div className="w-100 user-chat">
       <Card className="border_rounded">
@@ -25,7 +27,7 @@ const ChatWindow = (props) => {
           {currentPhoneNumber && (
             <Row>
               <Col md="4" xs="9">
-                <h5 className="font-size-15 mb-1">{chatBoxUsername}</h5>
+                <h5 className="font-size-15 mb-1">{ChatBoxUsername}</h5>
                 <p className="text-muted mb-0">
                   <i
                     className={
@@ -107,7 +109,7 @@ const ChatWindow = (props) => {
                 <Button
                   color="primary"
                   disabled={!currentPhoneNumber}
-                  onClick={() => addMessage(currentPhoneNumber, currentUser.name)}
+                  onClick={() => addMessage(currentMessage)}
                   className="btn1 border_rounded"
                 >
                   <span className="d-none d-sm-inline-block me-2">Send</span>{' '}

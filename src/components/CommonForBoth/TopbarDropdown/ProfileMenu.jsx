@@ -24,6 +24,7 @@ const ProfileMenu = (props) => {
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
+      console.log(import.meta.env.VITE_APP_DEFAULTAUTH);
       if (import.meta.env.VITE_APP_DEFAULTAUTH === "firebase") {
         const obj = JSON.parse(localStorage.getItem("authUser"));
         setusername(obj.displayName);
@@ -32,9 +33,15 @@ const ProfileMenu = (props) => {
         import.meta.env.VITE_APP_DEFAULTAUTH === "jwt"
       ) {
         const obj = JSON.parse(localStorage.getItem("authUser"));
+        console.log(obj.username);
         setusername(obj.username);
+        console.log(username)
+         
       }
+    
+  
     }
+   
   }, [props.success]);
 
   return (

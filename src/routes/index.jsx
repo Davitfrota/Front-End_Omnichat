@@ -5,6 +5,7 @@ import OrderScreen from "../pages/OrderScreen/OrderScreen";
 
 import Chat from "../pages/Chat/Chat";
 
+
 // // Profile
 import UserProfile from "../pages/Authentication/user-profile";
 
@@ -38,16 +39,17 @@ import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-veri
 
 const authProtectedRoutes = [
   { path: "/", component: () => <Redirect to="/chat" />},
-  // { path: "/dashboard", component: () => <Redirect to="/chat" />},
+   { path: "/dashboard", component: () => <Redirect to="/chat" />},
   
   //chat
   { path: "/chat", component: Chat },
 
   { path: "/orders", component: OrderScreen },                                          
 
+  
   //   // //profile
   { path: "/profile", component: UserProfile },
-  
+
   //   //Charts
 
 

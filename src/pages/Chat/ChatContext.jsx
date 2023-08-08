@@ -13,6 +13,7 @@ import {
   getMessages as onGetMessages,
   updateChat as onUpdateChat,
 } from "/src/store/actions";
+import { LOCALHOST_API_BASE_URL } from '../../constants/apiUrls';
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
@@ -28,27 +29,24 @@ const ChatProvider = ({ children }) => {
   const [Chat_Box_User_Status, setChatBoxUserStatus] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
   const [isToastActive, setIsToastActive] = useState(false);
-
+  const [messages, setMessages] = useState("");
    const dispatch = useDispatch();
-    const socket = io('https://twilliopizza.mateusb121.repl.co');
+    const socket = io(LOCALHOST_API_BASE_URL);
 
    const social_icons = {
     whatsapp: whatsappIcon,
     instagram: instagramIcon,
     messenger: facebookIcon,
   }
-  const {chats, messages,  error } = useSelector(state => ({
+  const {chats, error } = useSelector(state => ({
     chats: state.chat.chats,
-    messages: state.chat.messages,
     error: state.chat.error
   }));
     useEffect(() => {
       dispatch(onGetChats());
 
-      if (currentPhoneNumber) { dispatch(onGetMessages(currentPhoneNumber)); }
+      if (currentPhoneNumber) { set }
     }, [dispatch]);
-
-
 
 
   useEffect(() => {
@@ -57,15 +55,18 @@ const ChatProvider = ({ children }) => {
 
 
   useEffect(() => {
-    
+    socket.on('connect', () => {
+      console.log('connected');
+    });
+
     socket.on('message', (data) => {
       console.log('message_received:', data);
       handleMessage(data)
     });
 
-    return () => {
-     // socket.disconnect();
-    };
+    socket.on('my response', (data) => {
+      console.log('my_response:', data);
+    }) 
   }, []);
 
   useEffect(() => {
@@ -89,58 +90,38 @@ const ChatProvider = ({ children }) => {
     }
   };
 
-  if (error && error.message) {
-    displayErrorToast(error.message);
-  }
-
-  const handleMessage =  (messageData) => {
-    // Cria um array com todos os chats
-    if (messageData.phoneNumber) {
-      let chatsArray = Object.values(chats);
-      
-      const chatExists = chats.some(chat => {
-      
-        return chat.phoneNumber === messageData.phoneNumber;
-      });
-    console.log('chatExists: ' + chatExists);
-      if (!chatExists) {
-  
-       // Ajuste esta linha conforme a estrutura do seu estado de chat
-
-        const newChat = { id: chats.length, phoneNumber: messageData.phoneNumber, from: messageData.from, messagePot: [], unreadMessages: 0, name: messageData.sender, status: "active" };
-        
-        dispatch(onAddChat(newChat));
-      }
-
-       addMessage(messageData);
-      
+  useEffect(() => {
+    if (error && error.message) {
+      displayErrorToast(error.message);
     }
-  }
+  }, [error]);
+
+  const handleMessage =  (chat) => {
+    dispatch(onAddChat(chat));
+    }
+  
 
   const userChatOpen = (chat) => {
     setChatBoxUsername(chat.name);
+    console.log(chat.name);
     setChatBoxUserStatus(chat.status);
-
+console.log(chat.status);
     setCurrentPhoneNumber(chat.phoneNumber);
-    console.log('currentPhoneNumber: ' + currentPhoneNumber)
+  console.log(chat.phoneNumber);
+
     if (chat.unreadMessages && chat.unreadMessages > 0) {
       
-     
+     chat.unreadMessages = 0;
 
-    dispatch(onUpdateChat({ phoneNumber: chat.phoneNumber, unreadMessages: 0 }))
+    dispatch(onUpdateChat(chat))
     }
-    dispatch(onGetMessages(chat.phoneNumber));
+    console.log(chat.messagePot);
+    setMessages(chat.messagePot);
   };
 
   const addMessage = (messageData) => {
     
     console.log(currentPhoneNumber);
-    if (messageData.phoneNumber === currentPhoneNumber) {
-      
-    } else {
-      
-      AddUnreadMessageToChat(messageData);
-    }
   
     const message = {
       
@@ -163,10 +144,6 @@ const ChatProvider = ({ children }) => {
     }
   };
 
-  const AddUnreadMessageToChat = (messageData) => {
-    
-      dispatch(onUpdateChat(messageData))
-  }
   const onKeyPress = e => {
     const { key, value } = e;
     if (key === "Enter") {
@@ -198,7 +175,8 @@ const ChatProvider = ({ children }) => {
     handleMessage,
     userChatOpen,
        onKeyPress,
-    social_icons,
+     social_icons,
+    messages,
   };
 
     
