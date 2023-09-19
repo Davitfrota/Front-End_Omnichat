@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 import OrderScreen from "../pages/OrderScreen/OrderScreen";
-
+import DashboardSaas from "../pages/Dashboard-saas/index";
 import Chat from "../pages/Chat/Chat";
 
 
@@ -39,12 +39,12 @@ import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-veri
 
 const authProtectedRoutes = [
   { path: "/", component: () => <Redirect to="/chat" />},
-   { path: "/dashboard", component: () => <Redirect to="/chat" />},
   
   //chat
   { path: "/chat", component: Chat },
 
-  { path: "/orders", component: OrderScreen },                                          
+  { path: "/orders", component: OrderScreen }, 
+  { path: "/dashboard-saas", component: DashboardSaas },                                        
 
   
   //   // //profile

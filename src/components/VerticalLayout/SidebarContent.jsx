@@ -128,7 +128,12 @@ const SidebarContent = props => {
                 <span>{props.t("Calendar")}</span>
               </Link>
             </li> */}
-
+            <li>
+              <Link to="/dashboard-saas">
+                <i className="bx bx-home-circle"></i>
+                <span>{props.t("Dashboards")}</span>
+              </Link>
+            </li>
             <li>
               <Link to="/chat" className="">
                 <i className="bx bx-chat"></i>

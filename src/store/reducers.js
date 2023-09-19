@@ -17,6 +17,9 @@ import contacts from "./contacts/reducer"
 
 import orders from "./orders/reducer"
 
+import DashboardSaas from "./dashboard-saas/reducer";
+import Dashboard from "./dashboard/reducer";
+
 const rootReducer = combineReducers({
 
   Layout,
@@ -26,7 +29,9 @@ const rootReducer = combineReducers({
   Profile,
   chat,
   contacts,
-  orders
+  orders,
+  DashboardSaas,
+  Dashboard,
 })
 
 export default rootReducer
