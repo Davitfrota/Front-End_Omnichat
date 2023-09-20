@@ -25,7 +25,10 @@ import { Link } from "react-router-dom";
 import "../../components/CommonForBoth/rightbar.scss";
 
 //Import images
-
+import bgimg1 from "../../assets/images/sidebar/img1.jpg";
+import bgimg2 from "../../assets/images/sidebar/img2.jpg";
+import bgimg3 from "../../assets/images/sidebar/img3.jpg";
+import bgimg4 from "../../assets/images/sidebar/img4.jpg";
 
 //constants
 import {
@@ -231,7 +234,7 @@ const RightSidebar = props => {
                   <hr className="mt-1" />
                   <div className="radio-toolbar">
                     <span className="mb-2 d-block" id="radio-title">
-                    {props.t("TypeLeftBar")}{" "}
+                      {props.t("TypeLeftBar")}{" "}
                     </span>
                     <input
                       type="radio"
@@ -278,7 +281,7 @@ const RightSidebar = props => {
 
                   <div className="radio-toolbar coloropt-radio">
                     <span className="mb-2 d-block" id="radio-title">
-                    {props.t("ColorLeftBar")}
+                      {props.t("ColorLeftBar")}
                     </span>
                     <Row>
                       <Col>
@@ -544,7 +547,7 @@ const RightSidebar = props => {
                 </React.Fragment>
               ) : null}
 
-         
+
             </div>
           </div>
         </SimpleBar>
@@ -563,9 +566,9 @@ RightSidebar.propTypes = {
   changeSidebarType: PropTypes.func,
   changeTopbarTheme: PropTypes.func,
   isPreloader: PropTypes.any,
-  layoutType: PropTypes.any,  
-  layoutModeType : PropTypes.any,
-  changeLayoutMode : PropTypes.func,
+  layoutType: PropTypes.any,
+  layoutModeType: PropTypes.any,
+  changeLayoutMode: PropTypes.func,
   layoutWidth: PropTypes.any,
   leftSideBarTheme: PropTypes.any,
   leftSideBarThemeImage: PropTypes.any,
