@@ -9,7 +9,7 @@ import { Container, Row, Col, CardBody, Card, Button, Form, Label, Input, FormFe
 // import images
 import profileImg from "../../assets/images/profile-img.png";
 import logoImg from "../../assets/images/logo.svg";
-
+import avatar from "../../assets/images/users/avatar-1.jpg";
 import { Link } from "react-router-dom";
 
 const LockScreen = () => {
