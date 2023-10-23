@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GCP_API_BASE_URL, LOCALHOST_API_BASE_URL } from '../../constants/apiUrls';
 
 
-const googleCloudAxiosAPI = axios.create({
+const googleCloudAPI = axios.create({
     baseURL: GCP_API_BASE_URL 
 })
 
@@ -10,7 +10,7 @@ const localHostApi = axios.create({
     baseURL: LOCALHOST_API_BASE_URL + '/conversations'
 })
 
-const currentApi = googleCloudAxiosAPI;
+const currentApi = localHostApi;
 
 export const getChats = async () => {
     try {
